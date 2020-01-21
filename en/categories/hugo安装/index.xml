@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo安装 on lczen</title>
+    <link>https://lczen.github.io/en/categories/hugo%E5%AE%89%E8%A3%85/</link>
+    <description>Recent content in hugo安装 on lczen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Fri, 17 Jan 2020 11:55:08 +0800</lastBuildDate>
+    
+        <atom:link href="https://lczen.github.io/en/categories/hugo%E5%AE%89%E8%A3%85/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>hugo安装指令</title>
+        <link>https://lczen.github.io/en/posts/hugo%E5%AE%89%E8%A3%85%E7%BD%91%E7%AB%99%E6%8C%87%E4%BB%A4/</link>
+        <pubDate>Fri, 17 Jan 2020 11:55:08 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/hugo%E5%AE%89%E8%A3%85%E7%BD%91%E7%AB%99%E6%8C%87%E4%BB%A4/</guid>
+        <description>hugo安装指令 root目录下config.toml中的头部要改成： baseURL = &amp;quot;/&amp;quot; themesDir = &amp;quot;themes&amp;quot; languageCode = &amp;quot;en-us&amp;quot; title = &amp;quot;Zen LU&amp;quot; theme = &amp;quot;m10c&amp;quot; brew install hugo hugo new site zenblog cd zenblog git clone https://github.com/vaga/hugo-theme-m10c.git themes/m10c cd themes ls cd .. hugo server</description>
+      </item>
+      
+    
+  </channel>
+</rss>
