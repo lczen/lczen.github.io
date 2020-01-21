@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
-    <lastBuildDate>Sun, 19 Jan 2020 21:13:42 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jan 2020 20:06:28 +0800</lastBuildDate>
     
         <atom:link href="https://lczen.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     
@@ -30,6 +30,24 @@
         
         <guid>https://lczen.github.io/en/showcase/hugo/hugo-theme-zdoc/</guid>
         <description></description>
+      </item>
+      
+      <item>
+        <title>资源下载</title>
+        <link>https://lczen.github.io/en/posts/websites/</link>
+        <pubDate>Tue, 21 Jan 2020 20:06:28 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/websites/</guid>
+        <description>网站标签 http://www.yunpangou.com/2154977354010695</description>
+      </item>
+      
+      <item>
+        <title>练习题1</title>
+        <link>https://lczen.github.io/en/posts/pythonpractice1/</link>
+        <pubDate>Tue, 21 Jan 2020 18:21:58 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/pythonpractice1/</guid>
+        <description>简答题 请谈谈Python中is 和 == 的区别 is用于比较两个变量是否引用了同一个内存地址 is 表示的是对象标示符（object identity），作</description>
       </item>
       
       <item>

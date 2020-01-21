@@ -14,7 +14,7 @@
   
   <url>
     <loc>https://lczen.github.io/en/</loc>
-    <lastmod>2020-01-20T03:31:38+08:00</lastmod>
+    <lastmod>2020-01-21T20:06:28+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -28,18 +28,8 @@
   </url>
   
   <url>
-    <loc>https://lczen.github.io/en/showcase/hugo/</loc>
-    <lastmod>2020-01-19T21:04:11+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lczen.github.io/en/showcase/</loc>
-    <lastmod>2020-01-19T15:43:38+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://lczen.github.io/en/categories/</loc>
-    <lastmod>2020-01-20T03:31:38+08:00</lastmod>
+    <lastmod>2020-01-21T20:06:28+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -54,7 +44,7 @@
   
   <url>
     <loc>https://lczen.github.io/en/posts/</loc>
-    <lastmod>2020-01-20T03:31:38+08:00</lastmod>
+    <lastmod>2020-01-21T20:06:28+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -68,13 +58,23 @@
   </url>
   
   <url>
-    <loc>https://lczen.github.io/en/categories/python%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2020-01-20T03:31:38+08:00</lastmod>
+    <loc>https://lczen.github.io/en/series/</loc>
+    <lastmod>2020-01-21T20:06:28+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://lczen.github.io/ko/series/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://lczen.github.io/en/series/"
+                />
   </url>
   
   <url>
     <loc>https://lczen.github.io/en/tags/</loc>
-    <lastmod>2020-01-20T03:31:38+08:00</lastmod>
+    <lastmod>2020-01-21T20:06:28+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -85,6 +85,31 @@
                 hreflang="en"
                 href="https://lczen.github.io/en/tags/"
                 />
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/posts/websites/</loc>
+    <lastmod>2020-01-21T20:06:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/posts/pythonpractice1/</loc>
+    <lastmod>2020-01-21T18:21:58+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/showcase/hugo/</loc>
+    <lastmod>2020-01-19T21:04:11+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/showcase/</loc>
+    <lastmod>2020-01-19T15:43:38+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/categories/python%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2020-01-20T03:31:38+08:00</lastmod>
   </url>
   
   <url>
@@ -154,20 +179,6 @@
   
   <url>
     <loc>https://lczen.github.io/en/pt/</loc>
-  </url>
-  
-  <url>
-    <loc>https://lczen.github.io/en/series/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://lczen.github.io/ko/series/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://lczen.github.io/en/series/"
-                />
   </url>
   
 </urlset>
