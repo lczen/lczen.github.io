@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>hugo安装指令 – lczen</title>
+    <title>非暴力沟通 – lczen</title>
     
 
 
@@ -691,19 +691,19 @@
 
     <meta name="description" content="" />
 <meta name="keywords" content="">
-<meta name="created" content="2020-01-17T11:55:08&#43;0800">
-<meta name="modified" content="2020-01-17T11:55:08&#43;0800">
+<meta name="created" content="2020-01-28T13:40:47&#43;0800">
+<meta name="modified" content="2020-01-28T13:40:47&#43;0800">
 
 
 <meta property="og:site_name" content="lczen">
-<meta property="og:title" content="hugo安装指令">
-<meta property="og:url" content="https://lczen.github.io/en/posts/hugo%E5%AE%89%E8%A3%85%E7%BD%91%E7%AB%99%E6%8C%87%E4%BB%A4/">
+<meta property="og:title" content="非暴力沟通">
+<meta property="og:url" content="https://lczen.github.io/en/posts/readingnotes/">
 <meta property="og:type" content="article">
 
 <meta name="generator" content="Hugo 0.62.2" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
-<link rel="canonical" href="https://lczen.github.io/en/posts/hugo%E5%AE%89%E8%A3%85%E7%BD%91%E7%AB%99%E6%8C%87%E4%BB%A4/">
+<link rel="canonical" href="https://lczen.github.io/en/posts/readingnotes/">
 <link rel="manifest" href="/manifest.json">
 
   <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
@@ -727,11 +727,12 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "headline": "hugo安装指令",
-    "datePublished": "2020-01-17T11:55:08+08:00",
-    "dateModified": "2020-01-17T11:55:08+08:00",
-    "url" : "https://lczen.github.io/en/posts/hugo%E5%AE%89%E8%A3%85%E7%BD%91%E7%AB%99%E6%8C%87%E4%BB%A4/",
-    "description": "hugo安装指令 root目录下config.toml中的头部要改成： baseURL = \u0026quot;/\u0026quot; themesDir = \u0026quot;themes\u0026quot; languageCode = \u0026quot;en-us\u0026quot; title = \u0026quot;Zen LU\u0026quot; theme = …",
+    "headline": "非暴力沟通",
+    "datePublished": "2020-01-28T13:40:47+08:00",
+    "dateModified": "2020-01-28T13:40:47+08:00",
+    "url" : "https://lczen.github.io/en/posts/readingnotes/",
+    "description": "提出请求 请让我成为我自己。 5.如果你选择这一句，我们意见不一致。对我来说，“让我成为我自己”是一个模糊的请求。如果发言者说“我希望你告诉我，",
+    "keywords": ["非暴力沟通"],
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https://lczen.github.io/"
@@ -923,7 +924,7 @@
   
   <li  class="is-active" >
     
-      <span>hugo安装指令</span>
+      <span>非暴力沟通</span>
     
   </li>
   
@@ -932,59 +933,65 @@
 </nav>
   
   <div class="single">
-    <h2 class="single__title">hugo安装指令</h2>
+    <h2 class="single__title">非暴力沟通</h2>
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Jan 17, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 1 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Jan 28, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 3 min read </span>
   <span class="single__info">
     
   </span>
 </div>
       <div class="single__tags caption">
 
+  
+    🏷️
+  
+  
+  <li>
+    <a href="/en/tags/%E9%9D%9E%E6%9A%B4%E5%8A%9B%E6%B2%9F%E9%80%9A" class="single__tag" title="非暴力沟通">
+      #非暴力沟通
+    </a>
+  </li>
+    
+
 </div>
     </div>    
     <article class="single__contents">
       
-      <h3 id="hugo安装指令">hugo安装指令</h3>
-<h4 id="root目录下configtoml中的头部要改成">root目录下config.toml中的头部要改成：</h4>
-<pre><code>baseURL = &quot;/&quot;
-themesDir = &quot;themes&quot;
-languageCode = &quot;en-us&quot;
-title = &quot;Zen LU&quot;
-theme = &quot;m10c&quot;
-</code></pre><pre><code>brew install hugo
-hugo new site zenblog
-cd zenblog
-git clone https://github.com/vaga/hugo-theme-m10c.git themes/m10c
-cd themes
-ls
-cd ..
-hugo server -t m10c --buildDrafts
-hugo new post/blog.md
-hugo --theme=m10c --baseUrl=&quot;https://lczen.github.io/&quot; --buildDrafts
-cd public
-git init
-git add .
-git commit -m &quot;我的hugo文件第一次提交&quot;
-git remote add origin https://github.com/lczen/lczen.github.io.git
-git pull origin master --allow-unrelated-histories(我第二次换主题的时候用了这个)
-git push -u origin master
-
-#后面每次更新直接用下面代码：
-修改以后：
-cd /users/zen/my-site
-hugo --theme=hugo_theme_adam_eve --baseUrl=&quot;https://lczen.github.io/&quot; --buildDrafts
-cd public
-git init
-git add .
-git remote add origin https://github.com/lczen/lczen.github.io.git
-git commit -m “justmac”
-git pull origin master --allow-unrelated-histories
-git push -u origin master
-</code></pre><h2 id="markdown显示图片">markdown显示图片</h2>
-<p><img src="/images/qr.png" alt="avatar" /></p>
+      <h2 id="提出请求">提出请求</h2>
+<h3 id="请让我成为我自己">请让我成为我自己。</h3>
+<p>5.如果你选择这一句，我们意见不一致。对我来说，“让我成为我自己”是一个模糊的请求。如果发言者说“我希望你告诉我，即使你不喜欢我做的一些事情，你仍然会和我在一起”，那么，我认为发言者提出了明确的请求。</p>
+<h3 id="6关于昨天的会议请不要隐瞒你的看法">6.关于昨天的会议，请不要隐瞒你的看法。</h3>
+<p>6.如果你选择这一句，我们意见不一致。对我来说，“不要隐瞒”是一个模糊的请求。如果发言者说“请告诉我，你怎么看我昨天在会议中的表现，给我一些建议好吗”，那么，我认为发言者提出了明确的请求。</p>
+<p>马歇尔•卢森堡. 非暴力沟通 (Kindle 位置 953-955).</p>
+<h3 id="7我希望你能在规定的时速内驾驶">7.我希望你能在规定的时速内驾驶。</h3>
+<h3 id="8我想更好地了解你">8.我想更好地了解你。</h3>
+<p>8.如果你选择这一句，我们意见不一致。如果发言者说“我想多一些时间和你聊聊，不知道你是否愿意每周和我吃一次午饭”，那么，我认为发言者提出了明确的请求。</p>
+<h3 id="9我希望你尊重我的个人隐私">9.我希望你尊重我的个人隐私。</h3>
+<p>9.如果你选择这一句，我们意见不一致。对我来说，“尊重我的个人隐私”这个短语并不能清楚地表达发言者的请求。如果发言者说“在进我的办公室前，请先敲门好吗”，那么，我认为发言者提出了明确的请求。</p>
+<h3 id="10我希望你经常做晚饭">10.我希望你经常做晚饭。</h3>
+<p>10.如果你选择这一句，我们意见不一致。对我来说，“经常”这个词并不能清楚地表达发言者的请求。如果发言者说“我希望你每周一晚上都可以做晚饭”，那么，我认为发言者提出了明确的请求。</p>
+<h2 id="倾听">倾听</h2>
+<h3 id="倾听之前的准备">倾听之前的准备</h3>
+<p>为了倾听他人，我们需要先放下已有的想法和判断，全神贯注地体会对方。以色列哲学家马丁·布伯（MartinBuber）对此作出了描述：“尽管有种种相似之处，生活的每时每刻就像一个刚出生的婴儿，一张新的面孔，我们从未见过，也不可能再次见到。我们无法停留在过去，也无法预见我们的反应。我们需要不带成见地感受变化。我们需要用全身心去倾听。”<br />
+倾听的作用&mdash;工具人</p>
+<h3 id="感受与需要">感受与需要</h3>
+<p>男：和你说话有什么用？你从不好好听。<br />
+马歇尔：“你现在关心的是他的想法而非他的需要。我想，如果我们注意的是别人的需要而非他对我们的看法，我们将发现别人并不那么可怕。我们还会发现，他不高兴是因为他的需要没有得到满足。”<br />
+（wrong）女：你感到不高兴，是因为你觉得我不理解你？<br />
+女：你不高兴是因为你需要得到理解？</p>
+<h3 id="给他人反馈">给他人反馈</h3>
+<p>在倾听他人的观察、感受、需要和请求之后，我们可以主动表达我们的理解。如果我们已经准确领会了他们的意思，我们的反馈将帮助他们意识到这一点。反之，如果我们的理解还不到位，他们也就有机会来纠正我们。此外，这样做还有助于人们体会自己的状况，从而深入了解自己。</p>
+<h4 id="使用疑问句给予反馈">使用疑问句给予反馈</h4>
+<p>非暴力沟通建议我们使用疑问句来给予他人反馈。这将便于他人对我们的理解作出必要的补充。问题可以集中于以下几个方面：<br />
+1.他人的观察：“上周我有三个晚上不在家，<strong>你说的是这回事？</strong>”<br />
+2.他人的感受及需要：“你很灰心？<strong>你希望得到肯定是吗？</strong>”<br />
+3.他人的请求：“<strong>你是不是想请我帮你预订酒店？</strong>”<br />
+以下没有用心体会他人：<br />
+1.“你说的是什么事？”（我有些困惑。我想知道你是指哪件事。告诉我好吗？[感受+需要]）<br />
+2.“你现在心情怎么样？”“为什么你会有那样的感觉？”<br />
+3.“你希望我怎么做？”</p>
 
     </article>
     
@@ -996,17 +1003,17 @@ git push -u origin master
     <div class="grow"></div>
 <nav class="pagination-single">
   
-    <a href="https://lczen.github.io/en/about/" class="pagination-single__left">
+    <a href="https://lczen.github.io/en/posts/websites/" class="pagination-single__left">
       <div class="pagination-single__icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
       </div>
-      <div class="pagination-single__left-title">About</div>      
+      <div class="pagination-single__left-title">资源下载</div>      
     </a>
   
   <div class="grow"></div>
   
-    <a href="https://lczen.github.io/en/posts/jupyter%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/" class="pagination-single__right">      
-      <div class="pagination-single__right-title">jupyter小技巧</div>
+    <a href="https://lczen.github.io/en/showcase/hugo/hugo-theme-zdoc/" class="pagination-single__right">      
+      <div class="pagination-single__right-title">Hugo zDoc Theme</div>
       <div class="pagination-single__icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/></svg>
       </div>
@@ -1363,16 +1370,27 @@ document.addEventListener('DOMContentLoaded', function () {
   <div class="toc ">
     <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#提出请求">提出请求</a>
       <ul>
-        <li><a href="#hugo安装指令">hugo安装指令</a>
+        <li><a href="#请让我成为我自己">请让我成为我自己。</a></li>
+        <li><a href="#6关于昨天的会议请不要隐瞒你的看法">6.关于昨天的会议，请不要隐瞒你的看法。</a></li>
+        <li><a href="#7我希望你能在规定的时速内驾驶">7.我希望你能在规定的时速内驾驶。</a></li>
+        <li><a href="#8我想更好地了解你">8.我想更好地了解你。</a></li>
+        <li><a href="#9我希望你尊重我的个人隐私">9.我希望你尊重我的个人隐私。</a></li>
+        <li><a href="#10我希望你经常做晚饭">10.我希望你经常做晚饭。</a></li>
+      </ul>
+    </li>
+    <li><a href="#倾听">倾听</a>
+      <ul>
+        <li><a href="#倾听之前的准备">倾听之前的准备</a></li>
+        <li><a href="#感受与需要">感受与需要</a></li>
+        <li><a href="#给他人反馈">给他人反馈</a>
           <ul>
-            <li><a href="#root目录下configtoml中的头部要改成">root目录下config.toml中的头部要改成：</a></li>
+            <li><a href="#使用疑问句给予反馈">使用疑问句给予反馈</a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#markdown显示图片">markdown显示图片</a></li>
   </ul>
 </nav>
   </div>
@@ -1951,7 +1969,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
           
             
-              <a href="https://lczen.github.io/en/posts/hugo%E5%AE%89%E8%A3%85%E7%BD%91%E7%AB%99%E6%8C%87%E4%BB%A4/" data-lang="en" class="dropdown-item is-active">English</a>
+              <a href="https://lczen.github.io/en/posts/readingnotes/" data-lang="en" class="dropdown-item is-active">English</a>
             
           
         

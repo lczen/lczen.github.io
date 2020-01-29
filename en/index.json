@@ -45,8 +45,8 @@
 	"content": ""
 },
 {
-	"uri": "https://lczen.github.io/en/series/",
-	"title": "Series",
+	"uri": "https://lczen.github.io/en/tags/",
+	"title": "Tags",
 	"tags": [],
 	"categories": [],
 	"series": [],
@@ -54,8 +54,35 @@
 	"content": ""
 },
 {
-	"uri": "https://lczen.github.io/en/tags/",
-	"title": "Tags",
+	"uri": "https://lczen.github.io/en/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/",
+	"title": "读书笔记",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://lczen.github.io/en/tags/%E9%9D%9E%E6%9A%B4%E5%8A%9B%E6%B2%9F%E9%80%9A/",
+	"title": "非暴力沟通",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://lczen.github.io/en/posts/readingnotes/",
+	"title": "非暴力沟通",
+	"tags": ["非暴力沟通"],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": "提出请求 请让我成为我自己。 5.如果你选择这一句，我们意见不一致。对我来说，“让我成为我自己”是一个模糊的请求。如果发言者说“我希望你告诉我，即使你不喜欢我做的一些事情，你仍然会和我在一起”，那么，我认为发言者提出了明确的请求。\n6.关于昨天的会议，请不要隐瞒你的看法。 6.如果你选择这一句，我们意见不一致。对我来说，“不要隐瞒”是一个模糊的请求。如果发言者说“请告诉我，你怎么看我昨天在会议中的表现，给我一些建议好吗”，那么，我认为发言者提出了明确的请求。\n马歇尔•卢森堡. 非暴力沟通 (Kindle 位置 953-955).\n7.我希望你能在规定的时速内驾驶。 8.我想更好地了解你。 8.如果你选择这一句，我们意见不一致。如果发言者说“我想多一些时间和你聊聊，不知道你是否愿意每周和我吃一次午饭”，那么，我认为发言者提出了明确的请求。\n9.我希望你尊重我的个人隐私。 9.如果你选择这一句，我们意见不一致。对我来说，“尊重我的个人隐私”这个短语并不能清楚地表达发言者的请求。如果发言者说“在进我的办公室前，请先敲门好吗”，那么，我认为发言者提出了明确的请求。\n10.我希望你经常做晚饭。 10.如果你选择这一句，我们意见不一致。对我来说，“经常”这个词并不能清楚地表达发言者的请求。如果发言者说“我希望你每周一晚上都可以做晚饭”，那么，我认为发言者提出了明确的请求。\n倾听 倾听之前的准备 为了倾听他人，我们需要先放下已有的想法和判断，全神贯注地体会对方。以色列哲学家马丁·布伯（MartinBuber）对此作出了描述：“尽管有种种相似之处，生活的每时每刻就像一个刚出生的婴儿，一张新的面孔，我们从未见过，也不可能再次见到。我们无法停留在过去，也无法预见我们的反应。我们需要不带成见地感受变化。我们需要用全身心去倾听。”\n倾听的作用\u0026mdash;工具人\n感受与需要 男：和你说话有什么用？你从不好好听。\n马歇尔：“你现在关心的是他的想法而非他的需要。我想，如果我们注意的是别人的需要而非他对我们的看法，我们将发现别人并不那么可怕。我们还会发现，他不高兴是因为他的需要没有得到满足。”\n（wrong）女：你感到不高兴，是因为你觉得我不理解你？\n女：你不高兴是因为你需要得到理解？\n给他人反馈 在倾听他人的观察、感受、需要和请求之后，我们可以主动表达我们的理解。如果我们已经准确领会了他们的意思，我们的反馈将帮助他们意识到这一点。反之，如果我们的理解还不到位，他们也就有机会来纠正我们。此外，这样做还有助于人们体会自己的状况，从而深入了解自己。\n使用疑问句给予反馈 非暴力沟通建议我们使用疑问句来给予他人反馈。这将便于他人对我们的理解作出必要的补充。问题可以集中于以下几个方面：\n1.他人的观察：“上周我有三个晚上不在家，你说的是这回事？”\n2.他人的感受及需要：“你很灰心？你希望得到肯定是吗？”\n3.他人的请求：“你是不是想请我帮你预订酒店？”\n以下没有用心体会他人：\n1.“你说的是什么事？”（我有些困惑。我想知道你是指哪件事。告诉我好吗？[感受+需要]）\n2.“你现在心情怎么样？”“为什么你会有那样的感觉？”\n3.“你希望我怎么做？”\n"
+},
+{
+	"uri": "https://lczen.github.io/en/series/",
+	"title": "Series",
 	"tags": [],
 	"categories": [],
 	"series": [],
@@ -168,7 +195,7 @@
 	"categories": [],
 	"series": [],
 	"description": "",
-	"content": "hugo安装指令 root目录下config.toml中的头部要改成： baseURL = \u0026quot;/\u0026quot; themesDir = \u0026quot;themes\u0026quot; languageCode = \u0026quot;en-us\u0026quot; title = \u0026quot;Zen LU\u0026quot; theme = \u0026quot;m10c\u0026quot; brew install hugo hugo new site zenblog cd zenblog git clone https://github.com/vaga/hugo-theme-m10c.git themes/m10c cd themes ls cd .. hugo server -t m10c --buildDrafts hugo new post/blog.md hugo --theme=m10c --baseUrl=\u0026quot;https://lczen.github.io/\u0026quot; --buildDrafts cd public git init git add . git commit -m \u0026quot;我的hugo文件第一次提交\u0026quot; git remote add origin https://github.com/lczen/lczen.github.io.git git pull origin master --allow-unrelated-histories(我第二次换主题的时候用了这个) git push -u origin master #后面每次更新直接用下面代码： 修改以后： cd /users/zen/my-site hugo --theme=hugo_theme_adam_eve --baseUrl=\u0026quot;https://lczen.github.io/\u0026quot; --buildDrafts cd public git init git add . git remote add origin https://github.com/lczen/lczen.github.io.git git commit -m “justmac” git pull origin master --allow-unrelated-histories git push -u origin master "
+	"content": "hugo安装指令 root目录下config.toml中的头部要改成： baseURL = \u0026quot;/\u0026quot; themesDir = \u0026quot;themes\u0026quot; languageCode = \u0026quot;en-us\u0026quot; title = \u0026quot;Zen LU\u0026quot; theme = \u0026quot;m10c\u0026quot; brew install hugo hugo new site zenblog cd zenblog git clone https://github.com/vaga/hugo-theme-m10c.git themes/m10c cd themes ls cd .. hugo server -t m10c --buildDrafts hugo new post/blog.md hugo --theme=m10c --baseUrl=\u0026quot;https://lczen.github.io/\u0026quot; --buildDrafts cd public git init git add . git commit -m \u0026quot;我的hugo文件第一次提交\u0026quot; git remote add origin https://github.com/lczen/lczen.github.io.git git pull origin master --allow-unrelated-histories(我第二次换主题的时候用了这个) git push -u origin master #后面每次更新直接用下面代码： 修改以后： cd /users/zen/my-site hugo --theme=hugo_theme_adam_eve --baseUrl=\u0026quot;https://lczen.github.io/\u0026quot; --buildDrafts cd public git init git add . git remote add origin https://github.com/lczen/lczen.github.io.git git commit -m “justmac” git pull origin master --allow-unrelated-histories git push -u origin master markdown显示图片 "
 },
 {
 	"uri": "https://lczen.github.io/en/archive/",
