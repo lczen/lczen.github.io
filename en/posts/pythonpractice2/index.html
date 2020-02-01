@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 1 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 3 min read </span>
   <span class="single__info">
     
   </span>
@@ -977,9 +977,10 @@
     <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> 你的结果: </span><span class="si">%s</span><span class="s1"> 应该返回的结果: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">got</span><span class="p">)</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="习题3">习题3</h3>
-<h4 id="输入一个非空的元组列表返回按列表中元组的最后一个元素从小到大排序后的元组列表">输入一个非空的元组列表，返回按列表中元组的最后一个元素从小到大排序后的元组列表</h4>
-<p>例如：输入：[(1, 7), (1, 3), (3, 4, 5), (2, 2)]应该返回：[(2, 2), (1, 3), (3, 4, 5), (1, 7)]<br />
+</div><h3 id="数据结构题">数据结构题</h3>
+<h4 id="习题3">习题3</h4>
+<p>输入一个非空的元组列表，返回按列表中元组的最后一个元素从小到大排序后的元组列表<br />
+例如：输入：[(1, 7), (1, 3), (3, 4, 5), (2, 2)]应该返回：[(2, 2), (1, 3), (3, 4, 5), (1, 7)]<br />
 提示：使用自定义键=函数从每个元组提取最后一个元素。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1023,18 +1024,192 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">remove_adjacent</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="p">:</span>
-    <span class="c1"># +++your code here+++</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">:</span>
-            <span class="k">del</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">nums</span>
+  <span class="c1"># +++your code here+++</span>
+  <span class="c1"># LAB(begin solution)</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="p">]</span>
+  <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">num</span> <span class="o">!=</span> <span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">:</span>
+      <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">result</span>
 <span class="c1"># 可运行代码自测</span>
 <span class="n">test</span><span class="p">(</span><span class="n">remove_adjacent</span><span class="p">(</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="p">)</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="p">)</span>
 <span class="n">test</span><span class="p">(</span><span class="n">remove_adjacent</span><span class="p">(</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="p">)</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="p">)</span>
 <span class="n">test</span><span class="p">(</span><span class="n">remove_adjacent</span><span class="p">(</span><span class="p">[</span><span class="p">]</span><span class="p">)</span><span class="p">,</span> <span class="p">[</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="习题5">习题5</h4>
+<h4 id="习题5-1">习题5</h4>
+<p>给定两个按递增顺序排序的列表,创建并返回一个合并的按排序排列的所有元素的列表。<br />
+例如输入 [&lsquo;aa&rsquo;, &lsquo;xx&rsquo;, &lsquo;zz&rsquo;], [&lsquo;bb&rsquo;, &lsquo;cc&rsquo;]，应该返回[&lsquo;aa&rsquo;, &lsquo;bb&rsquo;, &lsquo;cc&rsquo;, &lsquo;xx&rsquo;, &lsquo;zz&rsquo;]<br />
+希望你提供的解决方案在“线性”时间内工作，使两个列表都可以一次完成。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">linear_merge</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">)</span><span class="p">:</span>
+  <span class="c1"># +++your code here+++</span>
+  <span class="c1"># LAB(begin solution)</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="p">]</span>
+  <span class="c1"># Look at the two lists so long as both are non-empty.</span>
+  <span class="c1"># Take whichever element [0] is smaller.</span>
+  <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">list1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">list2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">:</span>
+      <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">list1</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">list2</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">)</span>
+
+  <span class="c1"># Now tack on what&#39;s left</span>
+  <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+  <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">result</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="习题5-2">习题5</h4>
+<p>考虑把一个字符串拆分成两个等分</p>
+<ul>
+<li>1.如果字符串长度是偶数，前一半和后一半的长度是相同的</li>
+<li>2.如果字符串长度是奇数，则多出的一个字符加到前一半，如：&lsquo;abcde&rsquo;，前一半是'abc&rsquo;，后一半是'de&rsquo;</li>
+<li>3.输入两个字符串, a 和 b,按以下格式返回结果
+<ul>
+<li>a-front + b-front + a-back + b-back</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">front_back</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span><span class="p">:</span>
+  <span class="c1"># +++your code here+++</span>
+  <span class="c1"># LAB(begin solution)</span>
+  <span class="c1"># Figure out the middle position of each string.</span>
+  <span class="n">a_middle</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span><span class="o">/</span> <span class="mi">2</span>
+  <span class="n">b_middle</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">/</span><span class="o">/</span> <span class="mi">2</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># add 1 if length is odd</span>
+    <span class="n">a_middle</span> <span class="o">=</span> <span class="n">a_middle</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">b_middle</span> <span class="o">=</span> <span class="n">b_middle</span> <span class="o">+</span> <span class="mi">1</span> 
+  <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="p">:</span><span class="n">a_middle</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="p">:</span><span class="n">b_middle</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">a_middle</span><span class="p">:</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">b_middle</span><span class="p">:</span><span class="p">]</span>
+<span class="c1"># 可运行代码自测</span>
+<span class="n">test</span><span class="p">(</span><span class="n">front_back</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">abcd</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">xy</span><span class="s1">&#39;</span><span class="p">)</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">abxcdy</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">test</span><span class="p">(</span><span class="n">front_back</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">abcde</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">xyz</span><span class="s1">&#39;</span><span class="p">)</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">abcxydez</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">test</span><span class="p">(</span><span class="n">front_back</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Kitten</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Donut</span><span class="s1">&#39;</span><span class="p">)</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">KitDontenut</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="综合练习题">综合练习题</h3>
+<p>编写程序完成以下任务：<br><br />
+读取指定的文件，并使用split()函数以空白为字符串分隔得到文件中所有的单词。<br />
+完成一个名为mimic_dict的函数：</p>
+<ul>
+<li>以出现在文件中的单词(全都小写化)为键(key)，文件中所有紧跟在单词后面的一个单词组成的列表为值(value)。单词列表可以是任意顺序的，也可以包含重复的值。<br />
+例如，键“and”可能有列表[&ldquo;then&rdquo;, &ldquo;best&rdquo;, &ldquo;then&rdquo;, &ldquo;after&rdquo;, &hellip;]，此列表包括了所有的文件中在'and'后面的单词。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">mimic_dict</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="p">:</span>
+  <span class="sa"></span><span class="s2">&#34;&#34;&#34;</span><span class="s2">Returns mimic dict mapping each word to list of words which follow it.</span><span class="s2">&#34;&#34;&#34;</span>
+  <span class="c1"># +++your code here+++</span>
+  <span class="c1"># LAB(begin solution)</span>
+  <span class="n">mimic_dict</span> <span class="o">=</span> <span class="p">{</span><span class="p">}</span>
+  <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">utf-8</span><span class="s1">&#39;</span><span class="p">)</span>
+  <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="p">)</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="p">)</span>
+  <span class="n">words</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="p">)</span>
+  <span class="n">prev</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">&#39;</span>
+  <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">prev</span> <span class="ow">in</span> <span class="n">mimic_dict</span><span class="p">:</span>
+      <span class="n">mimic_dict</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">mimic_dict</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="c1"># Could write as: mimic_dict[prev] = mimic_dict.get(prev, []) + [word]</span>
+    <span class="c1"># It&#39;s one line, but not totally satisfying.</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">word</span>
+  <span class="k">return</span> <span class="n">mimic_dict</span>
+
+<span class="k">def</span> <span class="nf">print_mimic</span><span class="p">(</span><span class="n">mimic_dict</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span><span class="p">:</span>
+  <span class="sa"></span><span class="s2">&#34;&#34;&#34;</span><span class="s2">Given mimic dict and start word, prints 200 random words.</span><span class="s2">&#34;&#34;&#34;</span>
+  <span class="c1"># +++your code here+++</span>
+  <span class="c1"># LAB(begin solution)</span>
+  <span class="k">for</span> <span class="n">unused_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="p">)</span>
+    <span class="n">nexts</span> <span class="o">=</span> <span class="n">mimic_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>          <span class="c1"># Returns None if not found</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nexts</span><span class="p">:</span>
+      <span class="n">nexts</span> <span class="o">=</span> <span class="n">mimic_dict</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">&#39;</span><span class="p">]</span>  <span class="c1"># Fallback to &#39;&#39; if not found</span>
+    <span class="n">word</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">nexts</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">../data/sample_text.txt</span><span class="s1">&#39;</span>
+<span class="n">mimic_dict</span> <span class="o">=</span> <span class="n">mimic_dict</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">print_mimic</span><span class="p">(</span><span class="n">mimic_dict</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -1436,12 +1611,16 @@ document.addEventListener('DOMContentLoaded', function () {
   <ul>
     <li>
       <ul>
-        <li><a href="#习题3">习题3</a>
+        <li><a href="#数据结构题">数据结构题</a>
           <ul>
-            <li><a href="#输入一个非空的元组列表返回按列表中元组的最后一个元素从小到大排序后的元组列表">输入一个非空的元组列表，返回按列表中元组的最后一个元素从小到大排序后的元组列表</a></li>
+            <li><a href="#习题3">习题3</a></li>
             <li><a href="#习题4">习题4</a></li>
+            <li><a href="#习题5">习题5</a></li>
+            <li><a href="#习题5-1">习题5</a></li>
+            <li><a href="#习题5-2">习题5</a></li>
           </ul>
         </li>
+        <li><a href="#综合练习题">综合练习题</a></li>
       </ul>
     </li>
   </ul>
