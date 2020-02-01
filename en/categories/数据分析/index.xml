@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据分析 on lczen</title>
+    <link>https://lczen.github.io/en/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</link>
+    <description>Recent content in 数据分析 on lczen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Sat, 01 Feb 2020 16:08:07 +0800</lastBuildDate>
+    
+        <atom:link href="https://lczen.github.io/en/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>数据分析包</title>
+        <link>https://lczen.github.io/en/posts/dataanalysis/</link>
+        <pubDate>Sat, 01 Feb 2020 16:08:07 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/dataanalysis/</guid>
+        <description>1 2 3 4 a = np.array([[1,2,3], [4,5,6]]) b= np.random.random((2,2)) # astype做类型转换 a.astype(np.float) 数组索引与切片/Array indexing and slicing</description>
+      </item>
+      
+    
+  </channel>
+</rss>

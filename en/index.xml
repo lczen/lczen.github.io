@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
-    <lastBuildDate>Sat, 01 Feb 2020 10:13:43 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 01 Feb 2020 16:08:07 +0800</lastBuildDate>
     
         <atom:link href="https://lczen.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     
@@ -30,6 +30,15 @@
         
         <guid>https://lczen.github.io/en/showcase/hugo/hugo-theme-zdoc/</guid>
         <description></description>
+      </item>
+      
+      <item>
+        <title>数据分析包</title>
+        <link>https://lczen.github.io/en/posts/dataanalysis/</link>
+        <pubDate>Sat, 01 Feb 2020 16:08:07 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/dataanalysis/</guid>
+        <description>1 2 3 4 a = np.array([[1,2,3], [4,5,6]]) b= np.random.random((2,2)) # astype做类型转换 a.astype(np.float) 数组索引与切片/Array indexing and slicing</description>
       </item>
       
       <item>

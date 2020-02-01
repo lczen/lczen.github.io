@@ -7,12 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
-    <lastBuildDate>Sat, 01 Feb 2020 10:13:43 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 01 Feb 2020 16:08:07 +0800</lastBuildDate>
     
         <atom:link href="https://lczen.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     
+      
+      <item>
+        <title>numpy</title>
+        <link>https://lczen.github.io/en/tags/numpy/</link>
+        <pubDate>Sat, 01 Feb 2020 16:08:07 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/tags/numpy/</guid>
+        <description></description>
+      </item>
       
       <item>
         <title>python练习题</title>
