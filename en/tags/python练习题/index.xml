@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python练习题 on lczen</title>
+    <link>https://lczen.github.io/en/tags/python%E7%BB%83%E4%B9%A0%E9%A2%98/</link>
+    <description>Recent content in python练习题 on lczen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Sat, 01 Feb 2020 10:13:43 +0800</lastBuildDate>
+    
+        <atom:link href="https://lczen.github.io/en/tags/python%E7%BB%83%E4%B9%A0%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>python练习题2</title>
+        <link>https://lczen.github.io/en/posts/pythonpractice2/</link>
+        <pubDate>Sat, 01 Feb 2020 10:13:43 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/pythonpractice2/</guid>
+        <description>1 2 3 4 5 6 def test(got, expected):#测试函数 if got == expected: prefix = &amp;#39;正确!&amp;#39; else: prefix = &amp;#39;错误!&amp;#39; print(&amp;#39;%</description>
+      </item>
+      
+      <item>
+        <title>python练习题3</title>
+        <link>https://lczen.github.io/en/posts/pythonpractice3/</link>
+        <pubDate>Sat, 01 Feb 2020 09:38:05 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/pythonpractice3/</guid>
+        <description>文件读写练习题 请对“Shanghai.txt”文件进行读取，并统计其中每个单词(小写后)出现的词频，并以词频从高到低以如下形式写入&amp;quot</description>
+      </item>
+      
+      <item>
+        <title>pythn练习题1</title>
+        <link>https://lczen.github.io/en/posts/pythonpractice1/</link>
+        <pubDate>Tue, 21 Jan 2020 18:21:58 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/pythonpractice1/</guid>
+        <description>简答题 请谈谈Python中is 和 == 的区别 is用于比较两个变量是否引用了同一个内存地址 is 表示的是对象标示符（object identity），作</description>
+      </item>
+      
+    
+  </channel>
+</rss>

@@ -58,23 +58,13 @@
   </url>
   
   <url>
-    <loc>https://lczen.github.io/en/posts/pythonpractice2/</loc>
+    <loc>https://lczen.github.io/en/tags/python%E7%BB%83%E4%B9%A0%E9%A2%98/</loc>
     <lastmod>2020-02-01T10:13:43+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://lczen.github.io/en/series/</loc>
+    <loc>https://lczen.github.io/en/posts/pythonpractice2/</loc>
     <lastmod>2020-02-01T10:13:43+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://lczen.github.io/ko/series/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://lczen.github.io/en/series/"
-                />
   </url>
   
   <url>
@@ -90,6 +80,11 @@
                 hreflang="en"
                 href="https://lczen.github.io/en/tags/"
                 />
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/categories/%E7%BB%83%E4%B9%A0%E9%A2%98/</loc>
+    <lastmod>2020-02-01T10:13:43+08:00</lastmod>
   </url>
   
   <url>
@@ -110,6 +105,21 @@
   <url>
     <loc>https://lczen.github.io/en/posts/readingnotes/</loc>
     <lastmod>2020-01-28T13:40:47+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/series/</loc>
+    <lastmod>2020-01-21T20:06:28+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://lczen.github.io/ko/series/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://lczen.github.io/en/series/"
+                />
   </url>
   
   <url>
