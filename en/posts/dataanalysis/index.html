@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 1 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 2 min read </span>
   <span class="single__info">
     
   </span>
@@ -1080,7 +1080,75 @@ sum函数axis = 1的时候：<br />
 <img src="/images/dataanalysis/arrayd2.png" alt="" /><br />
 sum函数axis = 2的时候：<br />
 <img src="/images/dataanalysis/arrayd3.png" alt="" /></p>
+<h3 id="乘法dotmultiply">乘法dot,multiply</h3>
+<pre><code>np.dot是点乘(矩阵乘法)
+|A B| . |E F| = |A*E+B*G A*F+B*H|
+|C D|   |G H|   |C*E+D*G C*F+D*H|
 
+np.multiply是逐元素乘法
+|A B| ⊙ |E F| = |A*E B*F|
+|C D|   |G H|   |C*G D*H|
+</code></pre><h2 id="pandas数据结构series">Pandas数据结构Series</h2>
+<h3 id="构造和初始化series">构造和初始化Series</h3>
+<pre><code>import pandas as pd
+**pd.__version__ #查看版本，不同版本的pandas功能有一些差异**
+s = pd.Series([7, 'Beijing', 2.17, -12344, 'Happy Birthday!'])
+s
+</code></pre><p>0                  7<br />
+1            Beijing<br />
+2               2.17<br />
+3             -12344<br />
+4    Happy Birthday!<br />
+dtype: object</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mf">2.17</span><span class="p">,</span> <span class="o">-</span><span class="mi">12344</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Happy Birthday!</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
+             <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">A</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">B</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">C</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">D</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">E</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+<span class="n">s</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>A                  7<br />
+B            Beijing<br />
+C               2.17<br />
+D             -12344<br />
+E    Happy Birthday!<br />
+dtype: object</p>
+<h3 id="dictionary创建series">dictionary创建Series</h3>
+<p>还可以用dictionary来构造一个Series，因为Series本来就是key value pairs。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">cities</span> <span class="o">=</span> <span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">:</span> <span class="mi">55000</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shanghai</span><span class="s1">&#39;</span><span class="p">:</span> <span class="mi">60000</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shenzhen</span><span class="s1">&#39;</span><span class="p">:</span> <span class="mi">50000</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Hangzhou</span><span class="s1">&#39;</span><span class="p">:</span> <span class="mi">20000</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Guangzhou</span><span class="s1">&#39;</span><span class="p">:</span> <span class="mi">25000</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Suzhou</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
+<span class="n">apts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cities</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">price</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">apts</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Beijing      55000.0<br />
+Shanghai     60000.0<br />
+Shenzhen     50000.0<br />
+Hangzhou     20000.0<br />
+Guangzhou    25000.0<br />
+Suzhou           NaN<br />
+Name: price, dtype: float64</p>
+<h3 id="numpy-ndarray构建一个series">numpy ndarray构建一个Series</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">a</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">b</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">c</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">e</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
     </article>
     
     
@@ -1463,6 +1531,14 @@ document.addEventListener('DOMContentLoaded', function () {
         <li><a href="#数学运算">数学运算</a></li>
         <li><a href="#广播特性boardcasting">广播特性/boardcasting</a></li>
         <li><a href="#统计数学运算summean">统计数学运算(sum,mean)</a></li>
+        <li><a href="#乘法dotmultiply">乘法dot,multiply</a></li>
+      </ul>
+    </li>
+    <li><a href="#pandas数据结构series">Pandas数据结构Series</a>
+      <ul>
+        <li><a href="#构造和初始化series">构造和初始化Series</a></li>
+        <li><a href="#dictionary创建series">dictionary创建Series</a></li>
+        <li><a href="#numpy-ndarray构建一个series">numpy ndarray构建一个Series</a></li>
       </ul>
     </li>
   </ul>
