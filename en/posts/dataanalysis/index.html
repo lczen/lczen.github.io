@@ -731,7 +731,7 @@
     "datePublished": "2020-02-01T16:08:07+08:00",
     "dateModified": "2020-02-01T16:08:07+08:00",
     "url" : "https://lczen.github.io/en/posts/dataanalysis/",
-    "description": "1 2 3 4 a = np.array([[1,2,3], [4,5,6]]) b= np.random.random((2,2)) # astype做类型转换 a.astype(np.float) 数组索引与切片/Array indexing and slicing",
+    "description": "numpy ###切片索引 1 2 3 4 a = np.array([[1,2,3], [4,5,6]]) b= np.random.random((2,2)) # astype做类型转换 a.astype(np.float) 数组索引与切片/Array indexing and slicing a[:, 1:3] …",
     "keywords": ["numpy"],
     "mainEntityOfPage": {
       "@type": "WebPage",
@@ -959,7 +959,9 @@
     </div>    
     <article class="single__contents">
       
-      <div class="highlight"><div class="chroma">
+      <h2 id="numpy">numpy</h2>
+<p>###切片索引</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -974,7 +976,110 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>数组索引与切片/Array indexing and slicing<br />
-<img src="/images/dataanalysis/numpy-index.png" alt="" /></p>
+<img src="/images/dataanalysis/numpy-index.png" alt="" /><br />
+<img src="/images/dataanalysis/3d.png" alt="" /></p>
+<pre><code>a[:, 1:3]
+array([[[4, 5, 6]],
+       [[2, 4, 5]]])
+a &gt; 2
+array([[[False, False,  True],
+        [ True,  True,  True]],
+       [[False, False,  True],
+        [False,  True,  True]]])
+
+a[a&gt;2] #根据条件选择
+array([3, 4, 5, 6, 3, 4, 5])#筛选出的是一维的结果
+
+a[a&gt;2] = 0 #根据条件选择数据进行赋值
+</code></pre><h3 id="数学运算">数学运算</h3>
+<p>不同维度加法</p>
+<pre><code>a
+a.shape
+array([[[1, 2, 0],
+        [0, 0, 0]],
+
+       [[1, 2, 0],
+        [2, 0, 0]]])
+c = np.random.random((2,3))
+c
+c.shape
+array([[0.57104354, 0.82210532, 0.99865874],
+       [0.63489647, 0.51821603, 0.1772419 ]])
+(2, 3)
+
+a + c
+array([[[1.57104354, 2.82210532, 0.99865874],
+        [0.63489647, 0.51821603, 0.1772419 ]],
+
+       [[1.57104354, 2.82210532, 0.99865874],
+        [2.63489647, 0.51821603, 0.1772419 ]]])
+</code></pre><h3 id="广播特性boardcasting">广播特性/boardcasting</h3>
+<p><img src="/images/dataanalysis/numpy-broadcast.png" alt="" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span><span class="p">)</span>
+<span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="p">)</span>
+<span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span> <span class="c1">#(8, 6, 6)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="统计数学运算summean">统计数学运算(sum,mean)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">#全部元素求和</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>array([[[0.13169241, 0.12076024, 0.94718171, 0.9868782 , 0.52460178,<br />
+0.7050304 ]],<br />
+[[0.75982848, 0.12849312, 0.99862352, 0.57892246, 0.93388848,<br />
+0.27688479]],<br />
+[[0.84861432, 0.46856831, 0.91133697, 0.43440833, 0.73288593,<br />
+0.55042371]],<br />
+[[0.14429995, 0.43673552, 0.39708228, 0.23377411, 0.81263233,<br />
+0.53145192]],<br />
+[[0.42747949, 0.99082152, 0.09460188, 0.02920687, 0.86489352,<br />
+0.25205818]],<br />
+[[0.15014402, 0.66933541, 0.54412228, 0.80764711, 0.09997845,<br />
+0.73227461]],<br />
+[[0.01941847, 0.97843217, 0.28262159, 0.27665419, 0.8822287 ,<br />
+0.37638411]],<br />
+[[0.35989009, 0.39787517, 0.83485582, 0.60017681, 0.86968622,<br />
+0.18526147]]])<br />
+25.321047407612056</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#按照第1个维度汇总求和</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>array([[2.84136723, 4.19102145, 5.01042605, 3.94766809, 5.72079541,<br />
+3.60976919]])</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#按照第3个维度汇总求和</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/array.png" alt="" /><br />
+sum函数axis = 0的时候：<br />
+<img src="/images/dataanalysis/arrayd1.png" alt="" /><br />
+sum函数axis = 1的时候：<br />
+<img src="/images/dataanalysis/arrayd2.png" alt="" /><br />
+sum函数axis = 2的时候：<br />
+<img src="/images/dataanalysis/arrayd3.png" alt="" /></p>
 
     </article>
     
@@ -1351,7 +1456,17 @@ document.addEventListener('DOMContentLoaded', function () {
     
   </div>
   <div class="toc ">
-    <nav id="TableOfContents"></nav>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#numpy">numpy</a>
+      <ul>
+        <li><a href="#数学运算">数学运算</a></li>
+        <li><a href="#广播特性boardcasting">广播特性/boardcasting</a></li>
+        <li><a href="#统计数学运算summean">统计数学运算(sum,mean)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
   </div>
 </section>
 
