@@ -14,7 +14,7 @@
   
   <url>
     <loc>https://lczen.github.io/en/</loc>
-    <lastmod>2020-01-28T13:40:47+08:00</lastmod>
+    <lastmod>2020-02-01T10:13:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -29,7 +29,7 @@
   
   <url>
     <loc>https://lczen.github.io/en/categories/</loc>
-    <lastmod>2020-01-28T13:40:47+08:00</lastmod>
+    <lastmod>2020-02-01T10:13:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -44,7 +44,7 @@
   
   <url>
     <loc>https://lczen.github.io/en/posts/</loc>
-    <lastmod>2020-01-28T13:40:47+08:00</lastmod>
+    <lastmod>2020-02-01T10:13:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -58,8 +58,28 @@
   </url>
   
   <url>
+    <loc>https://lczen.github.io/en/posts/pythonpractice2/</loc>
+    <lastmod>2020-02-01T10:13:43+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/series/</loc>
+    <lastmod>2020-02-01T10:13:43+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://lczen.github.io/ko/series/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://lczen.github.io/en/series/"
+                />
+  </url>
+  
+  <url>
     <loc>https://lczen.github.io/en/tags/</loc>
-    <lastmod>2020-01-28T13:40:47+08:00</lastmod>
+    <lastmod>2020-02-01T10:13:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -70,6 +90,11 @@
                 hreflang="en"
                 href="https://lczen.github.io/en/tags/"
                 />
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/posts/pythonpractice3/</loc>
+    <lastmod>2020-02-01T09:38:05+08:00</lastmod>
   </url>
   
   <url>
@@ -85,21 +110,6 @@
   <url>
     <loc>https://lczen.github.io/en/posts/readingnotes/</loc>
     <lastmod>2020-01-28T13:40:47+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lczen.github.io/en/series/</loc>
-    <lastmod>2020-01-21T20:06:28+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://lczen.github.io/ko/series/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://lczen.github.io/en/series/"
-                />
   </url>
   
   <url>

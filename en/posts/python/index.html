@@ -1209,6 +1209,7 @@ int(a),str(a),eval(x),tuple(x),list(x),chr(x) # 整数转换为字符</p>
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
+</span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 列表排序</span>
@@ -1223,6 +1224,7 @@ int(a),str(a),eval(x),tuple(x),list(x),chr(x) # 整数转换为字符</p>
 <span class="nb">sorted</span><span class="p">(</span><span class="n">tmp_strs</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1">#按照字母序降序排序</span>
 <span class="nb">sorted</span><span class="p">(</span><span class="n">tmp_strs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span> <span class="c1">#根据key对元素做处理后的结果对原序列排序，这里的len是函数，返回字符串长度</span>
 <span class="nb">sorted</span><span class="p">(</span><span class="n">tmp_strs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span> <span class="c1">#根据小写后的结果字母序排序</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">word_dic</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="p">)</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="c1">#字典按照value排序</span>
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="元组tuple">元组tuple</h4>
@@ -1580,6 +1582,15 @@ int(a),str(a),eval(x),tuple(x),list(x),chr(x) # 整数转换为字符</p>
 <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 <span class="n">result</span> <span class="o">=</span> <span class="nb">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">,</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="counter函数">counter函数</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">word_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">words_box</span><span class="p">)</span><span class="p">)</span><span class="c1">#统计列表words_box中词频并转成字典</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="文件操作">文件操作</h2>
@@ -2170,6 +2181,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <li><a href="#处理异常">处理异常</a></li>
     <li><a href="#函数定义">函数定义</a></li>
     <li><a href="#filter和map和reduce">filter和map和reduce</a></li>
+    <li><a href="#counter函数">counter函数</a></li>
     <li><a href="#文件操作">文件操作</a>
       <ul>
         <li><a href="#文件读">文件读</a></li>
