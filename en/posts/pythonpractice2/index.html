@@ -983,14 +983,16 @@
 提示：使用自定义键=函数从每个元组提取最后一个元素。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="p">:</span>
@@ -1000,7 +1002,39 @@
   <span class="c1"># +++your code here+++</span>
   <span class="c1"># LAB(begin solution)</span>
   <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tuples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">last</span><span class="p">)</span>
-  <span class="c1"># return sorted(tuples, key=lambda x : )</span>
+  <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tuples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">)</span>
+<span class="c1"># 可运行代码自测</span>
+<span class="n">test</span><span class="p">(</span><span class="n">sort_last</span><span class="p">(</span><span class="p">[</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="p">]</span><span class="p">)</span><span class="p">,</span><span class="p">[</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="习题4">习题4</h4>
+<p>输入一个数字列表，将所有相邻且相同的元素去重保留一个元素后返回<br />
+例如：输入[1, 2, 2, 3] 返回 [1, 2, 3]；输入[1, 1, 2, 2, 3, 3, 3] 返回 [1, 2, 3]<br />
+新建一个列表或者修改原来的列表返回均可。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">remove_adjacent</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="p">:</span>
+    <span class="c1"># +++your code here+++</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">nums</span>
+<span class="c1"># 可运行代码自测</span>
+<span class="n">test</span><span class="p">(</span><span class="n">remove_adjacent</span><span class="p">(</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="p">)</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="p">)</span>
+<span class="n">test</span><span class="p">(</span><span class="n">remove_adjacent</span><span class="p">(</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="p">)</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="p">)</span>
+<span class="n">test</span><span class="p">(</span><span class="n">remove_adjacent</span><span class="p">(</span><span class="p">[</span><span class="p">]</span><span class="p">)</span><span class="p">,</span> <span class="p">[</span><span class="p">]</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -1405,6 +1439,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <li><a href="#习题3">习题3</a>
           <ul>
             <li><a href="#输入一个非空的元组列表返回按列表中元组的最后一个元素从小到大排序后的元组列表">输入一个非空的元组列表，返回按列表中元组的最后一个元素从小到大排序后的元组列表</a></li>
+            <li><a href="#习题4">习题4</a></li>
           </ul>
         </li>
       </ul>
