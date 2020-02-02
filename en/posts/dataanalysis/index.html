@@ -1486,10 +1486,58 @@ debt	NaN	100	200	NaN	300	NaN
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#选择Type 2为空的那行数据，把Type 2列的数据设为Type 1</span>
 <span class="n">pokemon</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pokemon</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Type 2</span><span class="s2">&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="p">)</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Type 2</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pokemon</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pokemon</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Type 2</span><span class="s2">&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="p">)</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Type 1</span><span class="s2">&#34;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">apts</span><span class="p">[</span><span class="n">apts</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="p">)</span><span class="p">]</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">apts</span><span class="p">[</span><span class="n">apts</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="p">)</span> <span class="o">==</span> <span class="bp">False</span><span class="p">]</span><span class="p">)</span> <span class="c1">#根据是否缺失选择数据</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>用to_csv方法写出到文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">abcd</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">../data/sample.tsv</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>a	b	c	d
+0	0.569415	0.468089	0.260840	0.172120
+1	0.288680	0.771640	0.465192	0.979539
+2	0.095298	0.385866	0.983792	0.412143
+3	0.903898	0.327998	0.134250	0.948132
+4	0.955035	0.838292	0.932714	0.630797
+5	0.210932	0.428113	0.937603	0.650599
+6	0.661533	0.390347	0.080175	0.159178
+7	0.018230	0.961200	0.043113	0.877882
+8	0.381884	0.314338	0.273786	0.200851
+9	0.454861	0.283102	0.969393	0.404643
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="c1">#加法</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="数据删除">数据删除</h3>
+<p>DataFrame中的数据删除，可以用drop完成，需要特别注意的是，DataFrame的很多操作(包括drop)都有一个inplace参数，默认inplace=False，我们会对数据进行变换(比如删除行列)然后以返回值形态返回结果，如果inplace=True则会就地变换。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">frame</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">one</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">two</span><span class="s2">&#34;</span><span class="p">]</span><span class="p">)</span><span class="c1">#删除列表中的行</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">debt</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="c1">#删除列</span>
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -1894,6 +1942,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <li><a href="#dataframe数据选择与赋值">DataFrame数据选择与赋值</a></li>
         <li><a href="#csv文件读写">csv文件读写</a></li>
         <li><a href="#数据缺失">数据缺失</a></li>
+        <li><a href="#数据删除">数据删除</a></li>
       </ul>
     </li>
   </ul>
