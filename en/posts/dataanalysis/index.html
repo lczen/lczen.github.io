@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 5 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 6 min read </span>
   <span class="single__info">
     
   </span>
@@ -1540,7 +1540,228 @@ debt	NaN	100	200	NaN	300	NaN
 <span class="n">frame</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">debt</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="c1">#删除列</span>
 </code></pre></td></tr></table>
 </div>
+</div><h2 id="pandas下">pandas下</h2>
+<h3 id="分组与聚合">分组与聚合</h3>
+<h4 id="分组groupby">分组/groupby</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">salaries</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="p">{</span>
+    <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Name</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">BOSS</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Jason</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Jason</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Han</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">BOSS</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">BOSS</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Jason</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">BOSS</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
+    <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Year</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2016</span><span class="p">,</span><span class="mi">2016</span><span class="p">,</span><span class="mi">2016</span><span class="p">,</span><span class="mi">2016</span><span class="p">,</span><span class="mi">2017</span><span class="p">,</span><span class="mi">2017</span><span class="p">,</span><span class="mi">2017</span><span class="p">,</span><span class="mi">2017</span><span class="p">]</span><span class="p">,</span>
+    <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Salary</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10000</span><span class="p">,</span><span class="mi">2000</span><span class="p">,</span><span class="mi">4000</span><span class="p">,</span><span class="mi">5000</span><span class="p">,</span><span class="mi">18000</span><span class="p">,</span><span class="mi">25000</span><span class="p">,</span><span class="mi">3000</span><span class="p">,</span><span class="mi">4000</span><span class="p">]</span><span class="p">,</span>
+    <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Bonus</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1200</span><span class="p">,</span><span class="mi">4000</span><span class="p">,</span><span class="mi">2300</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">]</span>
+<span class="p">}</span><span class="p">)</span>
+<span class="n">salaries</span>
+</code></pre></td></tr></table>
 </div>
+</div><pre><code>	Name	Year	Salary	Bonus
+0	BOSS	2016	10000	3000
+1	Jason	2016	2000	1000
+2	Jason	2016	4000	1000
+3	Han	2016	5000	1200
+4	BOSS	2017	18000	4000
+5	BOSS	2017	25000	2300
+6	Jason	2017	3000	500
+7	BOSS	2017	4000	1000
+</code></pre><pre><code>group_by_name = salaries.groupby('Name')
+</code></pre><h3 id="聚合aggregatehttpspandaspydataorgpandas-docsstablegeneratedpandasdataframeaggregatehtmls">聚合/<a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.aggregate.html">aggregate</a>s</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group_by_name</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="p">)</span><span class="c1">#按照名字取sum</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>默认会排序，也可以选择不排序</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">salaries</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Name</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>也可以这么写</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group_by_name</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>group by的attributes</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">group_by_name</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">group_by_name</span><span class="p">)</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>{'BOSS': Int64Index([0, 4, 5, 7], dtype='int64'), 'Han': Int64Index([3], dtype='int64'), 'Jason': Int64Index([1, 2, 6], dtype='int64')}
+3
+</code></pre><p>可以用多个columns做group by</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group_by_name_year</span> <span class="o">=</span> <span class="n">salaries</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Name</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Year</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+<span class="n">group_by_name_year</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>size,mean,median</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group_by_name_year</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span>
+<span class="n">group_by_name</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="p">)</span>
+<span class="n">group_by_name</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="p">)</span>
+<span class="n">group_by_name</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="遍历分组">遍历分组</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">group_by_name</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">=====</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>BOSS
+=====
+   Name  Year  Salary  Bonus
+0  BOSS  2016   10000   3000
+4  BOSS  2017   18000   4000
+5  BOSS  2017   25000   2300
+7  BOSS  2017    4000   1000
+
+
+Han
+=====
+  Name  Year  Salary  Bonus
+3  Han  2016    5000   1200
+
+
+Jason
+=====
+    Name  Year  Salary  Bonus
+1  Jason  2016    2000   1000
+2  Jason  2016    4000   1000
+6  Jason  2017    3000    500
+</code></pre><p>选择一个group</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group_by_name</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Jason</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>Name	Year	Salary	Bonus
+1	Jason	2016	2000	1000
+2	Jason	2016	4000	1000
+6	Jason	2017	3000	500
+</code></pre><p>agg是aggregate的alias，可以替代使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group_by_name</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>Year	Salary	Bonus
+sum	mean	std	sum	mean	std	sum	mean	std
+Name									
+BOSS	8067	2016.750000	0.50000	57000	14250	9178.779875	10300	2575.000000	1260.621540
+Han	2016	2016.000000	NaN	5000	5000	NaN	1200	1200.000000	NaN
+Jason	6049	2016.333333	0.57735	9000	3000	1000.000000	2500	833.333333	288.675135
+</code></pre><p>对每一列可以采用不同的aggregate操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group_by_name</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Bonus</span><span class="s2">&#34;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Salary</span><span class="s2">&#34;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Year</span><span class="s2">&#34;</span><span class="p">:</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">)</span><span class="p">}</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	Bonus	Salary	Year
+Name			
+BOSS	10300	57000	2016
+Han	1200	5000	2016
+Jason	2500	9000	2016
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group_by_name</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="transformhttpspandaspydataorgpandas-docsstablegeneratedpandasdataframetransformhtml-vs-apply"><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.transform.html">transform</a> vs apply</h3>
+<p>transform会把group中的每一个record都按照同样的规则转化</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">nvda</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">../data/NVDA.csv</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">)</span>
+<span class="n">nvda</span><span class="o">.</span><span class="n">index</span>
+<span class="n">nvda</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">nvda</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>transform</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">zscore</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="p">)</span><span class="p">)</span><span class="o">/</span><span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="p">)</span>
+<span class="n">transformed</span> <span class="o">=</span> <span class="n">nvda</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">nvda</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">zscore</span><span class="p">)</span>
+<span class="n">transformed</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>用另一个function <a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.apply.html#pandas.DataFrame.apply">apply</a> 也可以起到同样的效果</p>
+
     </article>
     
     
@@ -1943,6 +2164,18 @@ document.addEventListener('DOMContentLoaded', function () {
         <li><a href="#csv文件读写">csv文件读写</a></li>
         <li><a href="#数据缺失">数据缺失</a></li>
         <li><a href="#数据删除">数据删除</a></li>
+      </ul>
+    </li>
+    <li><a href="#pandas下">pandas下</a>
+      <ul>
+        <li><a href="#分组与聚合">分组与聚合</a>
+          <ul>
+            <li><a href="#分组groupby">分组/groupby</a></li>
+          </ul>
+        </li>
+        <li><a href="#聚合aggregatehttpspandaspydataorgpandas-docsstablegeneratedpandasdataframeaggregatehtmls">聚合/aggregates</a></li>
+        <li><a href="#遍历分组">遍历分组</a></li>
+        <li><a href="#transformhttpspandaspydataorgpandas-docsstablegeneratedpandasdataframetransformhtml-vs-apply">transform vs apply</a></li>
       </ul>
     </li>
   </ul>
