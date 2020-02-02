@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 3 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 5 min read </span>
   <span class="single__info">
     
   </span>
@@ -1105,9 +1105,13 @@ dtype: object</p>
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mf">2.17</span><span class="p">,</span> <span class="o">-</span><span class="mi">12344</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Happy Birthday!</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mf">2.17</span><span class="p">,</span> <span class="o">-</span><span class="mi">12344</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Happy Birthday!</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+<span class="c1">#指定index</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mf">2.17</span><span class="p">,</span> <span class="o">-</span><span class="mi">12344</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Happy Birthday!</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
              <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">A</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">B</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">C</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">D</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">E</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
 <span class="n">s</span>
 </code></pre></td></tr></table>
@@ -1205,6 +1209,287 @@ Name: price, dtype: float64</p>
 <span class="n">apts</span> <span class="o">*</span><span class="o">*</span> <span class="mi">2</span> <span class="c1">#广播特性</span>
 <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">apts</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">cars</span> <span class="o">+</span> <span class="n">apts</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="c1">#注意广播特性与index对齐求和</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="数据结构dataframehttppandaspydataorgpandas-docsstablegeneratedpandasdataframehtml">数据结构<a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">Dataframe</a></h2>
+<h3 id="创建一个dataframe">创建一个DataFrame</h3>
+<p>dataframe可以由一个dictionary构造得到。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shanghai</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Guangzhou</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shenzhen</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Hangzhou</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Chongqing</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
+       <span class="sa"></span><span class="s1">&#39;</span><span class="s1">year</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2016</span><span class="p">,</span><span class="mi">2017</span><span class="p">,</span><span class="mi">2016</span><span class="p">,</span><span class="mi">2017</span><span class="p">,</span><span class="mi">2016</span><span class="p">,</span> <span class="mi">2016</span><span class="p">]</span><span class="p">,</span>
+       <span class="sa"></span><span class="s1">&#39;</span><span class="s1">population</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2100</span><span class="p">,</span> <span class="mi">2300</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">700</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">]</span><span class="p">}</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	city	year	population
+0	Beijing	2016	2100
+1	Shanghai	2017	2300
+2	Guangzhou	2016	1000
+3	Shenzhen	2017	700
+4	Hangzhou	2016	500
+5	Chongqing	2016	500
+</code></pre><p>columns的名字和顺序可以指定</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">year</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">population</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>index也可以指定</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">year</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">population</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
+                     <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">one</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">two</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">three</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">four</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">five</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">six</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>也可以从几个Series构建一个DataFrame</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># index会对齐</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">apts</span><span class="s2">&#34;</span><span class="p">:</span> <span class="n">apts</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">cars</span><span class="s2">&#34;</span><span class="p">:</span> <span class="n">cars</span><span class="p">}</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>也可以用一个list of dicts来构建DataFrame</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">BOSS</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">999999</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Jason</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">50000</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Han</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">}</span><span class="p">,</span> <span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">BOSS</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">99999</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Jason</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Han</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">200</span><span class="p">}</span><span class="p">]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">BOSS</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Han</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Jason</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	BOSS	Han	Jason
+0	999999	1000	50000
+1	99999	200	8000
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">salary</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">bonus</span><span class="s2">&#34;</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	BOSS	Han	Jason
+salary	999999	1000	50000
+bonus	99999	200	8000
+</code></pre><p>根据column取数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">apts</span><span class="s2">&#34;</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>算数运算新建一个column</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_cost</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">apts</span><span class="s2">&#34;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">cars</span><span class="s2">&#34;</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>apts	cars	total_cost
+Beijing	55000.0	300000.0	5800000.0
+Chongqing	NaN	150000.0	NaN
+Guangzhou	40000.0	200000.0	4200000.0
+Hangzhou	40000.0	NaN	NaN
+Shanghai	60000.0	400000.0	6400000.0
+Shenzhen	55000.0	300000.0	5800000.0
+Suzhou	NaN	NaN	NaN
+Tianjin	NaN	200000.0	NaN
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 注意一下Series与DataFrame的区别</span>
+<span class="n">frame</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">]</span> <span class="c1">#Series</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+<span class="n">frame</span><span class="p">[</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span> <span class="c1">#DataFrame</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>loc方法可以拿到行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># loc+index取出行</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">three</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">three</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span><span class="c1">#Series</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>iloc方法可以拿到行和列，把pandas dataframe当做numpy的ndarray来操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">frame</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	year	city	population
+one	2016	Beijing	2100
+two	2017	Shanghai	2300
+three	2016	Guangzhou	1000
+four	2017	Shenzhen	700
+five	2016	Hangzhou	500
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="c1">#类似于numpy的切片</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	population
+two	2300
+three	1000
+</code></pre><h3 id="dataframe数据选择与赋值">DataFrame数据选择与赋值</h3>
+<p>大多数情况下，我们的赋值操作都是在<strong>数据选择</strong>之后进行赋值的，DataFrame的数据选择有很多不同的函数，相对比较自由。但是建议大家使用<strong>loc函数</strong>进行数据选择。<br />
+具体的语法为<strong>df.loc[行条件,列条件]</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">one</span><span class="s2">&#34;</span><span class="p">,</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">population</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2200</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">debt</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="c1">#给一整列赋值</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">six</span><span class="s1">&#39;</span><span class="p">,</span><span class="p">:</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">#给一整行赋值</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们可以给定多个条件进行组合，选择对应的数据。每个条件用小括号包裹，同时通过&amp;(与) |(或) ~(非)进行组合。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">year</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">2016</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">!=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shanghai</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">population</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="p">,</span><span class="p">:</span><span class="p">]</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">year</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">2016</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">population</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="p">,</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">year</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">population</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	year	city	population	debt
+one	2016	Beijing	2200	100
+three	2016	Guangzhou	1000	100
+
+year	city	population
+one	2016	Beijing	2200
+two	2017	Shanghai	2300
+three	2016	Guangzhou	1000
+five	2016	Hangzhou	500
+</code></pre><p>还可以用Series来指定需要修改的index以及相对应的value，没有指定的默认用NaN.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">val</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">two</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">three</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">five</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+<span class="n">frame</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">debt</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>     year       city  population   debt
+one    2016    Beijing        2200    NaN
+two    2017   Shanghai        2300  100.0
+three  2016  Guangzhou        1000  200.0
+four   2017   Shenzhen         700    NaN
+five   2016   Hangzhou         500  300.0
+six       0          0           0    NaN
+</code></pre><p>如果我们想要知道有哪些列，直接用columns</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">index</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>一个DataFrame就和一个numpy 2d array一样，可以被转置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pop</span> <span class="o">=</span> <span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">2016</span><span class="p">:</span> <span class="mi">2100</span><span class="p">,</span> <span class="mi">2017</span><span class="p">:</span><span class="mi">2200</span><span class="p">}</span><span class="p">,</span>
+      <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shanghai</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">2015</span><span class="p">:</span><span class="mi">2400</span><span class="p">,</span> <span class="mi">2016</span><span class="p">:</span><span class="mi">2500</span><span class="p">,</span> <span class="mi">2017</span><span class="p">:</span><span class="mi">2600</span><span class="p">}</span><span class="p">}</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">T</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	one	two	three	four	five	six
+year	2016	2017	2016	2017	2016	0
+city	Beijing	Shanghai	Guangzhou	Shenzhen	Hangzhou	0
+population	2200	2300	1000	700	500	0
+debt	NaN	100	200	NaN	300	NaN
+</code></pre><h3 id="csv文件读写">csv文件读写</h3>
+<ul>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html">read_csv</a></li>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_csv.html">to_csv</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="n">pokemon</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">../data/Pokemon.csv</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">pokemon</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1">#describe可以帮我们了解数据的统计特性</span>
+<span class="n">pokemon</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="p">)</span>
+<span class="n">pokemon</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="mi">50</span><span class="p">,</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">HP</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Defense</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">../data/pokemon_tmp.csv</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="数据缺失">数据缺失</h3>
+<p><a href="https://pandas.pydata.org/pandas-docs/stable/missing_data.html">reference</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#选择Type 2为空的那行数据，把Type 2列的数据设为Type 1</span>
+<span class="n">pokemon</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pokemon</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Type 2</span><span class="s2">&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="p">)</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Type 2</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pokemon</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pokemon</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Type 2</span><span class="s2">&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="p">)</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Type 1</span><span class="s2">&#34;</span><span class="p">]</span>
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -1601,6 +1886,14 @@ document.addEventListener('DOMContentLoaded', function () {
         <li><a href="#series选择数据">Series选择数据</a></li>
         <li><a href="#series元素赋值">Series元素赋值</a></li>
         <li><a href="#series数学运算">Series数学运算</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据结构dataframehttppandaspydataorgpandas-docsstablegeneratedpandasdataframehtml">数据结构Dataframe</a>
+      <ul>
+        <li><a href="#创建一个dataframe">创建一个DataFrame</a></li>
+        <li><a href="#dataframe数据选择与赋值">DataFrame数据选择与赋值</a></li>
+        <li><a href="#csv文件读写">csv文件读写</a></li>
+        <li><a href="#数据缺失">数据缺失</a></li>
       </ul>
     </li>
   </ul>
