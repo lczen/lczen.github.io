@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 2 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 3 min read </span>
   <span class="single__info">
     
   </span>
@@ -1146,6 +1146,65 @@ Name: price, dtype: float64</p>
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">a</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">b</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">c</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">e</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="series选择数据">Series选择数据</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">apts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="p">]</span> <span class="c1">#切片</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">apts</span><span class="p">[</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">)</span><span class="c1">#切片&lt;class &#39;pandas.core.series.Series&#39;&gt;</span>
+<span class="o">*</span><span class="o">*</span><span class="n">apts</span><span class="p">[</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="p">]</span><span class="o">*</span><span class="o">*</span> <span class="c1">#这种写法是Series独有而list不具备的</span>
+<span class="n">apts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="p">]</span> <span class="o">+</span> <span class="n">apts</span><span class="p">[</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#注意，在相加的时候，其实是index对齐的方式相加的,其中一个没有结果是NaN</span>
+<span class="n">apts</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Hangzhou</span><span class="s2">&#34;</span><span class="p">]</span><span class="c1">#不显示index，只显示value</span>
+<span class="n">apts</span><span class="p">[</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Hangzhou</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Beijing</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Shenzhen</span><span class="s2">&#34;</span><span class="p">]</span><span class="p">]</span><span class="c1">#显示index和value</span>
+<span class="sa"></span><span class="s2">&#34;</span><span class="s2">Hangzhou</span><span class="s2">&#34;</span> <span class="o">*</span><span class="o">*</span><span class="ow">in</span><span class="o">*</span><span class="o">*</span> <span class="n">apts</span> <span class="c1">#判断是否有这个index</span>
+<span class="n">apts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Chongqing</span><span class="s2">&#34;</span><span class="p">,</span> <span class="mi">55</span><span class="p">)</span> <span class="c1">#和字典类似，默认值放在后面</span>
+<span class="n">apts</span><span class="p">[</span><span class="n">apts</span> <span class="o">&lt;</span> <span class="mi">50000</span><span class="p">]</span> <span class="c1">#条件选择</span>
+<span class="n">apts</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="p">)</span> <span class="c1">#中位数，统计计算</span>
+<span class="n">less_than_50000</span> <span class="o">=</span> <span class="n">apts</span> <span class="o">&lt;</span> <span class="mi">50000</span>
+<span class="n">less_than_50000</span> <span class="c1">#实际上拿到的是一个True or False的series</span>
+<span class="k">print</span><span class="p">(</span><span class="n">apts</span><span class="p">[</span><span class="n">less_than_50000</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="series元素赋值">Series元素赋值</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">apts</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shenzhen</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">55000</span>
+<span class="n">apts</span><span class="p">[</span><span class="n">apts</span> <span class="o">&lt;</span><span class="o">=</span> <span class="mi">50000</span><span class="p">]</span> <span class="o">=</span> <span class="mi">40000</span><span class="c1">#条件赋值</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="series数学运算">Series数学运算</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">apts</span> <span class="o">/</span> <span class="mi">2</span> <span class="c1">#广播特性</span>
+<span class="n">apts</span> <span class="o">*</span><span class="o">*</span> <span class="mi">2</span> <span class="c1">#广播特性</span>
+<span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">apts</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cars</span> <span class="o">+</span> <span class="n">apts</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="c1">#注意广播特性与index对齐求和</span>
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -1539,6 +1598,9 @@ document.addEventListener('DOMContentLoaded', function () {
         <li><a href="#构造和初始化series">构造和初始化Series</a></li>
         <li><a href="#dictionary创建series">dictionary创建Series</a></li>
         <li><a href="#numpy-ndarray构建一个series">numpy ndarray构建一个Series</a></li>
+        <li><a href="#series选择数据">Series选择数据</a></li>
+        <li><a href="#series元素赋值">Series元素赋值</a></li>
+        <li><a href="#series数学运算">Series数学运算</a></li>
       </ul>
     </li>
   </ul>
