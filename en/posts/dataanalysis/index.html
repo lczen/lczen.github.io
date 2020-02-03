@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 7 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 8 min read </span>
   <span class="single__info">
     
   </span>
@@ -1840,7 +1840,117 @@ Jason	2500	9000	2016
 <li>第二步是对每一部分数据都做一定的操作，这个操作可以是汇总操作aggregate，可以是一个变换transform，也可以是过滤数据filter。</li>
 <li>最后一步就是把处理过的数据再合成一张DataFrame。</li>
 </ul>
-
+<h2 id="多表合并与拼接">多表合并与拼接</h2>
+<ul>
+<li>concat</li>
+<li>append</li>
+<li>merge</li>
+<li>join</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">apts</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">55000</span><span class="p">,</span> <span class="mi">60000</span><span class="p">]</span><span class="p">,</span>
+                   <span class="sa"></span><span class="s1">&#39;</span><span class="s1">cars</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">200000</span><span class="p">,</span> <span class="mi">300000</span><span class="p">]</span><span class="p">,</span><span class="p">}</span><span class="p">,</span>
+                  <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shanghai</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">]</span>
+                  <span class="p">)</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">cars</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">150000</span><span class="p">,</span> <span class="mi">120000</span><span class="p">]</span><span class="p">,</span>
+                    <span class="sa"></span><span class="s1">&#39;</span><span class="s1">apts</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">]</span><span class="p">,</span>
+                   <span class="p">}</span><span class="p">,</span>
+                  <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Hangzhou</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Nanjing</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">apts</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">]</span><span class="p">,</span>
+                   <span class="sa"></span><span class="s1">&#39;</span><span class="s1">cars</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">180000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">]</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">mar</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">180000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">]</span><span class="p">}</span><span class="p">,</span>
+                  <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Guangzhou</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Chongqing</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="concathttpspandaspydataorgpandas-docsstablegeneratedpandasconcathtml"><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.concat.html">concat</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">ignore</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">df3</span><span class="p">]</span> 
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="p">[</span><span class="n">df1</span><span class="p">,</span><span class="n">df2</span><span class="p">,</span><span class="n">df3</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在concat的时候可以指定keys，这样可以给每一个部分加上一个Key。<br />
+以下的例子就构造了一个hierarchical index。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">result2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">y</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">z</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result2</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>              apts    cars       mar
+x Shanghai   55000  200000       NaN
+  Beijing    60000  300000       NaN
+y Hangzhou   25000  150000       NaN
+  Najing     20000  120000       NaN
+z Guangzhou  30000  180000  180000.0
+  Chongqing  10000  100000  100000.0
+</code></pre><p>选择数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">result2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">y</span><span class="s2">&#34;</span><span class="p">,</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">apts</span><span class="s2">&#34;</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">salaries</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">30000</span><span class="p">,</span> <span class="mi">30000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">]</span><span class="p">}</span><span class="p">,</span>
+                  <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Suzhou</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shanghai</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Guangzhou</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Tianjin</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+<span class="n">result3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="p">[</span><span class="n">result</span><span class="p">,</span> <span class="n">df4</span><span class="p">]</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>用inner可以去掉NaN,也就是说如果出现了不匹配的行就会被忽略</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">result3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="p">[</span><span class="n">result</span><span class="p">,</span> <span class="n">df4</span><span class="p">]</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">inner</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>用<a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.append.html">append</a>来做concat</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="p">)</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">join</span>
+</code></pre></td></tr></table>
+</div>
+</div>
     </article>
     
     
@@ -2257,6 +2367,11 @@ document.addEventListener('DOMContentLoaded', function () {
         <li><a href="#transformhttpspandaspydataorgpandas-docsstablegeneratedpandasdataframetransformhtml-vs-apply">transform vs apply</a></li>
         <li><a href="#filterhttpspandaspydataorgpandas-docsstablegeneratedpandasdataframefilterhtml">filter</a></li>
         <li><a href="#小结">小结</a></li>
+      </ul>
+    </li>
+    <li><a href="#多表合并与拼接">多表合并与拼接</a>
+      <ul>
+        <li><a href="#concathttpspandaspydataorgpandas-docsstablegeneratedpandasconcathtml">concat</a></li>
       </ul>
     </li>
   </ul>
