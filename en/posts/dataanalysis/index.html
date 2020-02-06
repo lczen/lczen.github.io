@@ -2147,6 +2147,50 @@ z Guangzhou  30000  180000  180000.0
 <span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">subway_station</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
+</div><h3 id="地铁附近的房子平均价格-比-非地铁的高多少">地铁附近的房子平均价格 比 非地铁的高多少</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">near_subway</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">subway_station</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">lj_data</span><span class="p">[</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">price</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">near_subway</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">near_subway</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">mean</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="地铁附近的房源离地铁平均距离">地铁附近的房源离地铁平均距离</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pattern</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">(</span><span class="s1">\</span><span class="s1">d+)米</span><span class="s1">&#39;</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">subway_distance</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">extra_info</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">get_subway_info</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="p">)</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">lj_data</span><span class="o">.</span><span class="n">near_subway</span><span class="o">==</span><span class="bp">True</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">subway_distance</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="最多的在租楼层">最多的在租楼层</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">floor</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="直接看房的房子比例">直接看房的房子比例</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">convenient</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">extra_info</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">随时看房</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">convenient</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
 </div>
     </article>
     
@@ -2588,6 +2632,10 @@ document.addEventListener('DOMContentLoaded', function () {
         <li><a href="#集中供暖和非集中供暖的有多少家平均价格是多少">集中供暖和非集中供暖的有多少家，平均价格是多少</a></li>
         <li><a href="#不同房型的平均最大最小面积">不同房型的平均/最大/最小面积</a></li>
         <li><a href="#哪个地铁口附近的房子最多">哪个地铁口附近的房子最多</a></li>
+        <li><a href="#地铁附近的房子平均价格-比-非地铁的高多少">地铁附近的房子平均价格 比 非地铁的高多少</a></li>
+        <li><a href="#地铁附近的房源离地铁平均距离">地铁附近的房源离地铁平均距离</a></li>
+        <li><a href="#最多的在租楼层">最多的在租楼层</a></li>
+        <li><a href="#直接看房的房子比例">直接看房的房子比例</a></li>
       </ul>
     </li>
   </ul>
