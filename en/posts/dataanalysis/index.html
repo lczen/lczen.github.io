@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 8 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 9 min read </span>
   <span class="single__info">
     
   </span>
@@ -1592,18 +1592,13 @@ debt	NaN	100	200	NaN	300	NaN
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">salaries</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Name</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>也可以这么写</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group_by_name</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#两形式相同</span>
+<span class="n">salaries</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Name</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="p">)</span>
+<span class="n">group_by_name</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>group by的attributes</p>
@@ -1948,6 +1943,208 @@ z Guangzhou  30000  180000  180000.0
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="p">)</span>
 <span class="n">df1</span><span class="o">.</span><span class="n">join</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="lianjia-projects">lianjia projects</h2>
+<h3 id="载入数据">载入数据</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="n">lj_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">../data/LJdata.csv</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">columns</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>大家规范一点，用英文的column name，这样免去了后续的一些问题(主要是编码问题)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">district</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">address</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">title</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_type</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">area</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">price</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">floor</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">build_time</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">direction</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">update_time</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">extra_info</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">link</span><span class="s1">&#39;</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看数据的形状和信息">查看数据的形状和信息</h3>
+<p>info/<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html">describe</a>/shape</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="p">)</span><span class="c1">#查看是否有空数据，isnull</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">all</span><span class="s1">&#39;</span><span class="p">)</span><span class="c1">#all</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="找到最近更新信息的20套房子">找到最近更新信息的20套房子</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">update_time</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="平均看房人数">平均看房人数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="p">)</span>
+<span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="p">)</span><span class="c1">#中位数</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="房龄最小的20套房子的平均看房人数平均面积">房龄最小的20套房子的平均看房人数、平均面积</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="k">def</span> <span class="nf">get_age</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">2019</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">age</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">build_time</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_age</span><span class="p">)</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_area</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">area</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="p">)</span><span class="p">)</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">age</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="p">[</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_area</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="房子价格的分布平均方差中位数">房子价格的分布(平均，方差，中位数)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">price</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="最受欢迎的朝向平均看房人数">最受欢迎的朝向(平均看房人数)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">tmp</span> <span class="o">=</span> <span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">direction</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">direction</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">mean</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">tmp</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="房型数量分布">房型数量分布</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_type</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="p">)</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_type</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">bar</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="最受欢迎的房型">最受欢迎的房型</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">tmp</span> <span class="o">=</span> <span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_type</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_type</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">mean</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">tmp</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="房子的平均租房价格按平米算">房子的平均租房价格(按平米算)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">price_per_m2</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">price</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_area</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">price_per_m2</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="最受关注的小区">最受关注的小区</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">tmp</span> <span class="o">=</span> <span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">address</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">address</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">sum</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">tmp</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">view_num</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="出租房源最多的小区">出租房源最多的小区</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">address</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="集中供暖和非集中供暖的有多少家平均价格是多少">集中供暖和非集中供暖的有多少家，平均价格是多少</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">center_heating</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">extra_info</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">集中供暖</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">price</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">center_heating</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">center_heating</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">mean</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="不同房型的平均最大最小面积">不同房型的平均/最大/最小面积</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">price</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_type</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">house_type</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">mean</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">max</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">min</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="哪个地铁口附近的房子最多">哪个地铁口附近的房子最多</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="k">def</span> <span class="nf">get_subway_info</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">&#39;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">距离(.+线(</span><span class="s1">\</span><span class="s1">(.*?段</span><span class="s1">\</span><span class="s1">))?)(.+站)</span><span class="s1">&#39;</span>
+<span class="n">lj_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">subway_station</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">extra_info</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">get_subway_info</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="p">)</span>
+<span class="n">lj_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">subway_station</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -2372,6 +2569,25 @@ document.addEventListener('DOMContentLoaded', function () {
     <li><a href="#多表合并与拼接">多表合并与拼接</a>
       <ul>
         <li><a href="#concathttpspandaspydataorgpandas-docsstablegeneratedpandasconcathtml">concat</a></li>
+      </ul>
+    </li>
+    <li><a href="#lianjia-projects">lianjia projects</a>
+      <ul>
+        <li><a href="#载入数据">载入数据</a></li>
+        <li><a href="#查看数据的形状和信息">查看数据的形状和信息</a></li>
+        <li><a href="#找到最近更新信息的20套房子">找到最近更新信息的20套房子</a></li>
+        <li><a href="#平均看房人数">平均看房人数</a></li>
+        <li><a href="#房龄最小的20套房子的平均看房人数平均面积">房龄最小的20套房子的平均看房人数、平均面积</a></li>
+        <li><a href="#房子价格的分布平均方差中位数">房子价格的分布(平均，方差，中位数)</a></li>
+        <li><a href="#最受欢迎的朝向平均看房人数">最受欢迎的朝向(平均看房人数)</a></li>
+        <li><a href="#房型数量分布">房型数量分布</a></li>
+        <li><a href="#最受欢迎的房型">最受欢迎的房型</a></li>
+        <li><a href="#房子的平均租房价格按平米算">房子的平均租房价格(按平米算)</a></li>
+        <li><a href="#最受关注的小区">最受关注的小区</a></li>
+        <li><a href="#出租房源最多的小区">出租房源最多的小区</a></li>
+        <li><a href="#集中供暖和非集中供暖的有多少家平均价格是多少">集中供暖和非集中供暖的有多少家，平均价格是多少</a></li>
+        <li><a href="#不同房型的平均最大最小面积">不同房型的平均/最大/最小面积</a></li>
+        <li><a href="#哪个地铁口附近的房子最多">哪个地铁口附近的房子最多</a></li>
       </ul>
     </li>
   </ul>
