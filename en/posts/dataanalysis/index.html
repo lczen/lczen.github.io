@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 14 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 17 min read </span>
   <span class="single__info">
     
   </span>
@@ -2778,6 +2778,344 @@ plt.legend([&lsquo;cos(x)', &lsquo;sin(x)', &lsquo;sqrt(x)'], loc='upper right&r
 <li>处理异常值时与3$\sigma$标准的异同：统计边界是否受异常值影响、容忍度的大小<br />
 <strong>matplotlib的工具手册在<a href="http://matplotlib.org/api/pyplot_api.html">这里</a>可以查到</strong></li>
 </ul>
+<h1 id="matplotlib应用案例">matplotlib应用案例</h1>
+<h2 id="案例自行车租赁数据分析与可视化">案例：自行车租赁数据分析与可视化</h2>
+<h3 id="步骤1导入数据与简易数据处理">步骤1：导入数据与简易数据处理</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span> <span class="c1"># 读取数据到DataFrame</span>
+<span class="kn">import</span> <span class="nn">urllib</span> <span class="c1"># 获取网络数据</span>
+<span class="kn">import</span> <span class="nn">shutil</span> <span class="c1"># 文件操作</span>
+<span class="kn">import</span> <span class="nn">zipfile</span> <span class="c1"># 压缩解压</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">ignore</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># 建立临时目录</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">mkdir bike_data</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">rm -rf bike_data; mkdir bike_data</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">data_source</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">http://archive.ics.uci.edu/ml/machine-learning-databases/00275/Bike-Sharing-Dataset.zip</span><span class="s1">&#39;</span> <span class="c1"># 网络数据地址</span>
+<span class="n">zipname</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">bike_data/Bike-Sharing-Dataset.zip</span><span class="s1">&#39;</span> <span class="c1"># 拼接文件和路径</span>
+<span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">data_source</span><span class="p">,</span> <span class="n">zipname</span><span class="p">)</span> <span class="c1"># 获得数据</span>
+
+<span class="n">zip_ref</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zipname</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">r</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># 创建一个ZipFile对象处理压缩文件</span>
+<span class="c1">#zip_ref.extractall(temp_dir) # 解压</span>
+<span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">bike_data</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">zip_ref</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="p">)</span>
+
+<span class="n">daily_path</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">bike_data/day.csv</span><span class="s1">&#39;</span>
+<span class="n">daily_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">daily_path</span><span class="p">)</span> <span class="c1"># 读取csv文件</span>
+<span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">dteday</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">dteday</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span> <span class="c1"># 把字符串数据传换成日期数据</span>
+<span class="n">drop_list</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">instant</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">season</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">yr</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">mnth</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">holiday</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">workingday</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">weathersit</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">atemp</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">hum</span><span class="s1">&#39;</span><span class="p">]</span> <span class="c1"># 不关注的列</span>
+<span class="n">daily_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">drop_list</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># inplace=true在对象上直接操作</span>
+
+<span class="n">daily_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="p">)</span> <span class="c1"># 看一看数据~</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>dteday  weekday temp  windspeed casual  registered  cnt
+0 2011-01-01  6 0.344167  0.160446  331 654 985
+1 2011-01-02  0 0.363478  0.248539  131 670 801
+2 2011-01-03  1 0.196364  0.248309  120 1229  1349
+3 2011-01-04  2 0.200000  0.160296  108 1454  1562
+4 2011-01-05  3 0.226957  0.186900  82  1518  1600
+</code></pre><h3 id="步骤2配置参数">步骤2：配置参数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span> <span class="c1"># 引入3.x版本的除法和打印</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="c1"># 在notebook中显示绘图结果</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="c1"># 设置一些全局的资源参数，可以进行个性化修改</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="c1"># 设置图片尺寸 14&#34; x 7&#34;</span>
+<span class="c1"># rc: resource configuration</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">figure</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span><span class="p">)</span>
+<span class="c1"># 设置字体 14</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">font</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="c1"># 不显示顶部和右侧的坐标线</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">axes.spines</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">top</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="c1"># 不显示网格</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">axes</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="c1"># 设置背景颜色是白色</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">axes</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">white</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="步骤3关联分析">步骤3：关联分析</h3>
+<h4 id="散点图-1">散点图</h4>
+<ul>
+<li>分析变量关系</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">font_manager</span>
+<span class="n">fontP</span> <span class="o">=</span> <span class="n">font_manager</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="p">)</span>
+<span class="n">fontP</span><span class="o">.</span><span class="n">set_family</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">SimHei</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">fontP</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="c1"># 包装一个散点图的函数便于复用</span>
+<span class="k">def</span> <span class="nf">scatterplot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="p">:</span>
+
+    <span class="c1"># 创建一个绘图对象</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="p">)</span>
+
+    <span class="c1"># 设置数据、点的大小、点的颜色和透明度</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#539caf</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">)</span> <span class="c1"># http://www.114la.com/other/rgb.htm</span>
+
+    <span class="c1"># 添加标题和坐标说明</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+
+<span class="c1"># 绘制散点图</span>
+<span class="n">scatterplot</span><span class="p">(</span><span class="n">x_data</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">temp</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="p">,</span> <span class="n">y_data</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">cnt</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="p">,</span> <span class="n">x_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Normalized temperature (C)</span><span class="s1">&#39;</span>
+            <span class="p">,</span> <span class="n">y_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check outs</span><span class="s1">&#39;</span>
+            <span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Number of Check Outs vs Temperature</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/matscatter2.png" alt="" /></p>
+<h4 id="曲线图">曲线图</h4>
+<ul>
+<li>拟合变量关系</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 线性回归</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="kn">as</span> <span class="nn">sm</span> <span class="c1"># 最小二乘</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">summary_table</span> <span class="c1"># 获得汇总信息</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">temp</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span> <span class="c1"># 线性回归增加常数项 y=kx+b</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">cnt</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="n">regr</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># 普通最小二乘模型，ordinary least square model</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="p">)</span>
+<span class="c1"># 从模型获得拟合数据</span>
+<span class="n">st</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">ss2</span> <span class="o">=</span> <span class="n">summary_table</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span> <span class="c1"># 置信水平alpha=5%，st数据汇总，data数据详情，ss2数据列名</span>
+<span class="n">fitted_values</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># 包装曲线绘制函数</span>
+<span class="k">def</span> <span class="nf">lineplot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="p">:</span>
+    <span class="c1"># 创建绘图对象</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="p">)</span>
+
+    <span class="c1"># 绘制拟合曲线，lw=linewidth，alpha=transparancy</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#539caf</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 添加标题和坐标说明</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+
+<span class="c1"># 调用绘图函数</span>
+<span class="n">lineplot</span><span class="p">(</span><span class="n">x_data</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">temp</span><span class="s1">&#39;</span><span class="p">]</span>
+         <span class="p">,</span> <span class="n">y_data</span> <span class="o">=</span> <span class="n">fitted_values</span>
+         <span class="p">,</span> <span class="n">x_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Normalized temperature (C)</span><span class="s1">&#39;</span>
+         <span class="p">,</span> <span class="n">y_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check outs</span><span class="s1">&#39;</span>
+         <span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Line of Best Fit for Number of Check Outs vs Temperature</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/matline2.png" alt="" /></p>
+<h4 id="带置信区间的曲线图">带置信区间的曲线图</h4>
+<ul>
+<li>评估曲线拟合结果</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 获得5%置信区间的上下界</span>
+<span class="n">predict_mean_ci_low</span><span class="p">,</span> <span class="n">predict_mean_ci_upp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="p">:</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># 创建置信区间DataFrame，上下界</span>
+<span class="n">CI_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">x_data</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">low_CI</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">upper_CI</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+<span class="n">CI_df</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">x_data</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">temp</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="n">CI_df</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">low_CI</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">predict_mean_ci_low</span>
+<span class="n">CI_df</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">upper_CI</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">predict_mean_ci_upp</span>
+<span class="n">CI_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">x_data</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="c1"># 根据x_data进行排序</span>
+
+<span class="c1"># 绘制置信区间</span>
+<span class="k">def</span> <span class="nf">lineplotCI</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">sorted_x</span><span class="p">,</span> <span class="n">low_CI</span><span class="p">,</span> <span class="n">upper_CI</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="p">:</span>
+    <span class="c1"># 创建绘图对象</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="p">)</span>
+
+    <span class="c1"># 绘制预测曲线</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#539caf</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Fit</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># 绘制置信区间，顺序填充</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sorted_x</span><span class="p">,</span> <span class="n">low_CI</span><span class="p">,</span> <span class="n">upper_CI</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#539caf</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">95</span><span class="s1">%</span><span class="s1"> CI</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># 添加标题和坐标说明</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+
+    <span class="c1"># 显示图例，配合label参数，loc=“best”自适应方式</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">best</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Call the function to create plot</span>
+<span class="n">lineplotCI</span><span class="p">(</span><span class="n">x_data</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">temp</span><span class="s1">&#39;</span><span class="p">]</span>
+           <span class="p">,</span> <span class="n">y_data</span> <span class="o">=</span> <span class="n">fitted_values</span>
+           <span class="p">,</span> <span class="n">sorted_x</span> <span class="o">=</span> <span class="n">CI_df</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">x_data</span><span class="s1">&#39;</span><span class="p">]</span>
+           <span class="p">,</span> <span class="n">low_CI</span> <span class="o">=</span> <span class="n">CI_df</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">low_CI</span><span class="s1">&#39;</span><span class="p">]</span>
+           <span class="p">,</span> <span class="n">upper_CI</span> <span class="o">=</span> <span class="n">CI_df</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">upper_CI</span><span class="s1">&#39;</span><span class="p">]</span>
+           <span class="p">,</span> <span class="n">x_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Normalized temperature (C)</span><span class="s1">&#39;</span>
+           <span class="p">,</span> <span class="n">y_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check outs</span><span class="s1">&#39;</span>
+           <span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Line of Best Fit for Number of Check Outs vs Temperature</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/matnormal.png" alt="" /></p>
 
     </article>
     
@@ -3258,6 +3596,22 @@ document.addEventListener('DOMContentLoaded', function () {
       </ul>
     </li>
     <li><a href="#常用图形">常用图形</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#案例自行车租赁数据分析与可视化">案例：自行车租赁数据分析与可视化</a>
+      <ul>
+        <li><a href="#步骤1导入数据与简易数据处理">步骤1：导入数据与简易数据处理</a></li>
+        <li><a href="#步骤2配置参数">步骤2：配置参数</a></li>
+        <li><a href="#步骤3关联分析">步骤3：关联分析</a>
+          <ul>
+            <li><a href="#散点图-1">散点图</a></li>
+            <li><a href="#曲线图">曲线图</a></li>
+            <li><a href="#带置信区间的曲线图">带置信区间的曲线图</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
