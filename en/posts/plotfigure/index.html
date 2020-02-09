@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 9, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 9 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 9, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 12 min read </span>
   <span class="single__info">
     
   </span>
@@ -1992,6 +1992,502 @@ plt.legend([&lsquo;cos(x)', &lsquo;sin(x)', &lsquo;sqrt(x)'], loc='upper right&r
 </code></pre></td></tr></table>
 </div>
 </div><p><img src="/images/dataanalysis/matbins.png" alt="" /></p>
+<h4 id="堆叠直方图">堆叠直方图</h4>
+<ul>
+<li>比较两个分布</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 绘制堆叠的直方图</span>
+<span class="k">def</span> <span class="nf">overlaid_histogram</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data1_name</span><span class="p">,</span> <span class="n">data1_color</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">data2_name</span><span class="p">,</span> <span class="n">data2_color</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="p">:</span>
+    <span class="c1"># 归一化数据区间，对齐两个直方图的bins</span>
+    <span class="n">max_nbins</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="c1">#计算边界</span>
+    <span class="n">data_range</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span><span class="p">)</span><span class="p">]</span>
+    <span class="n">binwidth</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">data_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">)</span> <span class="o">/</span> <span class="n">max_nbins</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">,</span> <span class="n">data_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">binwidth</span><span class="p">,</span> <span class="n">binwidth</span><span class="p">)</span> <span class="c1"># 生成直方图bins区间</span>
+
+    <span class="c1"># Create the plot</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">bins</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">data1_color</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">data1_name</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">bins</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">data2_color</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">data2_name</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">best</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Call the function to create plot</span>
+<span class="n">overlaid_histogram</span><span class="p">(</span><span class="n">data1</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">registered</span><span class="s1">&#39;</span><span class="p">]</span>
+                   <span class="p">,</span> <span class="n">data1_name</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Registered</span><span class="s1">&#39;</span>
+                   <span class="p">,</span> <span class="n">data1_color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#539caf</span><span class="s1">&#39;</span>
+                   <span class="p">,</span> <span class="n">data2</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">casual</span><span class="s1">&#39;</span><span class="p">]</span>
+                   <span class="p">,</span> <span class="n">data2_name</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Casual</span><span class="s1">&#39;</span>
+                   <span class="p">,</span> <span class="n">data2_color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#7663b0</span><span class="s1">&#39;</span>
+                   <span class="p">,</span> <span class="n">x_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check outs</span><span class="s1">&#39;</span>
+                   <span class="p">,</span> <span class="n">y_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Frequency</span><span class="s1">&#39;</span>
+                   <span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Distribution of Check Outs By Type</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/mathistgram.png" alt="" /></p>
+<ul>
+<li>registered：注册的分布，正态分布，why</li>
+<li>casual：偶然的分布，疑似指数分布，why</li>
+</ul>
+<h4 id="密度图">密度图</h4>
+<ul>
+<li>精细刻画概率分布<br />
+KDE: kernal density estimate<br />
+<img src="/images/dataanalysis/kde.jpg" alt="" /></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 计算概率密度</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gaussian_kde</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">registered</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="n">density_est</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># kernal density estimate: https://en.wikipedia.org/wiki/Kernel_density_estimation</span>
+<span class="c1"># 控制平滑程度，数值越大，越平滑</span>
+<span class="n">density_est</span><span class="o">.</span><span class="n">covariance_factor</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="o">.</span><span class="mi">3</span>
+<span class="n">density_est</span><span class="o">.</span><span class="n">_compute_covariance</span><span class="p">(</span><span class="p">)</span>
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># 绘制密度估计曲线</span>
+<span class="k">def</span> <span class="nf">densityplot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">density_est</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">density_est</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#539caf</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+<span class="c1"># 调用绘图函数</span>
+<span class="n">densityplot</span><span class="p">(</span><span class="n">x_data</span> <span class="o">=</span> <span class="n">x_data</span>
+            <span class="p">,</span> <span class="n">density_est</span> <span class="o">=</span> <span class="n">density_est</span>
+            <span class="p">,</span> <span class="n">x_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check outs</span><span class="s1">&#39;</span>
+            <span class="p">,</span> <span class="n">y_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Frequency</span><span class="s1">&#39;</span>
+            <span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Distribution of Registered Check Outs</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/matkde.png" alt="" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">type</span><span class="p">(</span><span class="n">density_est</span><span class="p">)</span> <span class="c1">#scipy.stats.kde.gaussian_kde</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="步骤5组间分析">步骤5：组间分析</h3>
+<ul>
+<li>组间定量比较</li>
+<li>分组粒度</li>
+<li>组间聚类</li>
+</ul>
+<h4 id="柱状图">柱状图</h4>
+<ul>
+<li>一级类间均值方差比较</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 分天分析统计特征</span>
+<span class="n">mean_total_co_day</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">cnt</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">]</span><span class="p">)</span>
+<span class="n">mean_total_co_day</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">mean_total_co_day</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="p">)</span>
+
+<span class="c1"># 定义绘制柱状图的函数</span>
+<span class="k">def</span> <span class="nf">barplot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">error_data</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="p">)</span>
+    <span class="c1"># 柱状图</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#539caf</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">align</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">center</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># 绘制方差</span>
+    <span class="c1"># ls=&#39;none&#39;去掉bar之间的连线</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">yerr</span> <span class="o">=</span> <span class="n">error_data</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#297083</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ls</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">none</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+<span class="c1"># 绘图函数调用</span>
+<span class="n">barplot</span><span class="p">(</span><span class="n">x_data</span> <span class="o">=</span> <span class="n">mean_total_co_day</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+        <span class="p">,</span> <span class="n">y_data</span> <span class="o">=</span> <span class="n">mean_total_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">mean</span><span class="s1">&#39;</span><span class="p">]</span>
+        <span class="p">,</span> <span class="n">error_data</span> <span class="o">=</span> <span class="n">mean_total_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">std</span><span class="s1">&#39;</span><span class="p">]</span>
+        <span class="p">,</span> <span class="n">x_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Day of week</span><span class="s1">&#39;</span>
+        <span class="p">,</span> <span class="n">y_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check outs</span><span class="s1">&#39;</span>
+        <span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Total Check Outs By Day of Week (0 = Sunday)</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/matbarplot.png" alt="" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">mean_total_co_day</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">daily_data</span><span class="p">[</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">cnt</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	cnt
+mean	std
+weekday		
+0	4228.828571	1872.496629
+1	4338.123810	1793.074013
+2	4510.663462	1826.911642
+3	4548.538462	2038.095884
+4	4667.259615	1939.433317
+5	4690.288462	1874.624870
+6	4550.542857	2196.693009
+</code></pre><h4 id="堆积柱状图">堆积柱状图</h4>
+<ul>
+<li>多级类间相对占比比较</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">mean_by_reg_co_day</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">registered</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">casual</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="p">)</span>
+<span class="n">mean_by_reg_co_day</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	registered	casual
+weekday		
+0	2890.533333	1338.295238
+1	3663.990476	674.133333
+2	3954.480769	556.182692
+3	3997.394231	551.144231
+4	4076.298077	590.961538
+5	3938.000000	752.288462
+6	3085.285714	1465.257143
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 分天统计注册和偶然使用的情况</span>
+<span class="n">mean_by_reg_co_day</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">registered</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">casual</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="p">)</span>
+<span class="c1"># 分天统计注册和偶然使用的占比</span>
+<span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">total</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">registered</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">casual</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">reg_prop</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">registered</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">total</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">casual_prop</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">casual</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">total</span><span class="s1">&#39;</span><span class="p">]</span>
+
+
+<span class="c1"># 绘制堆积柱状图</span>
+<span class="k">def</span> <span class="nf">stackedbarplot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data_list</span><span class="p">,</span> <span class="n">y_data_names</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="p">)</span>
+    <span class="c1"># 循环绘制堆积柱状图</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_data_list</span><span class="p">)</span><span class="p">)</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">,</span> <span class="n">align</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">center</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">y_data_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 采用堆积的方式，除了第一个分类，后面的分类都从前一个分类的柱状图接着画</span>
+            <span class="c1"># 用归一化保证最终累积结果为1</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="n">y_data_list</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="p">,</span> <span class="n">align</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">center</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">y_data_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">upper right</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># 设定图例位置</span>
+
+<span class="c1"># 调用绘图函数</span>
+<span class="n">stackedbarplot</span><span class="p">(</span><span class="n">x_data</span> <span class="o">=</span> <span class="n">mean_by_reg_co_day</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+               <span class="p">,</span> <span class="n">y_data_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">reg_prop</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span> <span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">casual_prop</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span>
+               <span class="p">,</span> <span class="n">y_data_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Registered</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Casual</span><span class="s1">&#39;</span><span class="p">]</span>
+               <span class="p">,</span> <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">#539caf</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#7663b0</span><span class="s1">&#39;</span><span class="p">]</span>
+               <span class="p">,</span> <span class="n">x_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Day of week</span><span class="s1">&#39;</span>
+               <span class="p">,</span> <span class="n">y_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Proportion of check outs</span><span class="s1">&#39;</span>
+               <span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check Outs By Registration Status and Day of Week (0 = Sunday)</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/matstacked.png" alt="" /></p>
+<ul>
+<li>从这幅图你看出了什么？工作日 VS 节假日</li>
+<li>为什么会有这样的差别？周末随意</li>
+</ul>
+<h4 id="分组柱状图">分组柱状图</h4>
+<ul>
+<li>多级类间绝对数值比较</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">mean_by_reg_co_day</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>registered	casual	total	reg_prop	casual_prop
+weekday					
+0	2890.533333	1338.295238	4228.828571	0.683531	0.316469
+1	3663.990476	674.133333	4338.123810	0.844603	0.155397
+2	3954.480769	556.182692	4510.663462	0.876696	0.123304
+3	3997.394231	551.144231	4548.538462	0.878830	0.121170
+4	4076.298077	590.961538	4667.259615	0.873381	0.126619
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 绘制分组柱状图的函数</span>
+<span class="k">def</span> <span class="nf">groupedbarplot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data_list</span><span class="p">,</span> <span class="n">y_data_names</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="p">)</span>
+    <span class="c1"># 设置每一组柱状图的宽度</span>
+    <span class="n">total_width</span> <span class="o">=</span> <span class="mf">0.8</span>
+    <span class="c1"># 设置每一个柱状图的宽度</span>
+    <span class="n">ind_width</span> <span class="o">=</span> <span class="n">total_width</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_data_list</span><span class="p">)</span>
+    <span class="c1"># 计算每一个柱状图的中心偏移</span>
+    <span class="n">alteration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">total_width</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="n">ind_width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">total_width</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="n">ind_width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">ind_width</span><span class="p">)</span>
+
+    <span class="c1"># 分别绘制每一个柱状图</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_data_list</span><span class="p">)</span><span class="p">)</span><span class="p">:</span>
+        <span class="c1"># 横向散开绘制</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_data</span> <span class="o">+</span> <span class="n">alteration</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">,</span> <span class="n">y_data_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">y_data_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">ind_width</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">upper right</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># 调用绘图函数</span>
+<span class="n">groupedbarplot</span><span class="p">(</span><span class="n">x_data</span> <span class="o">=</span> <span class="n">mean_by_reg_co_day</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+               <span class="p">,</span> <span class="n">y_data_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">registered</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span> <span class="n">mean_by_reg_co_day</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">casual</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">]</span>
+               <span class="p">,</span> <span class="n">y_data_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Registered</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Casual</span><span class="s1">&#39;</span><span class="p">]</span>
+               <span class="p">,</span> <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">#539caf</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">#7663b0</span><span class="s1">&#39;</span><span class="p">]</span>
+               <span class="p">,</span> <span class="n">x_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Day of week</span><span class="s1">&#39;</span>
+               <span class="p">,</span> <span class="n">y_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check outs</span><span class="s1">&#39;</span>
+               <span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check Outs By Registration Status and Day of Week (0 = Sunday)</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/matgroupedbar.png" alt="" /></p>
+<ul>
+<li>偏移前：ind_width/2</li>
+<li>偏移后：total_width/2</li>
+<li>偏移量：total_width/2-ind_width/2</li>
+</ul>
+<h4 id="箱式图">箱式图</h4>
+<ul>
+<li>多级类间数据分布比较</li>
+<li>柱状图 + 堆叠灰度图</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 只需要指定分类的依据，就能自动绘制箱式图</span>
+<span class="n">days</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
+<span class="n">bp_data</span> <span class="o">=</span> <span class="p">[</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">days</span><span class="p">:</span>
+    <span class="n">bp_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">daily_data</span><span class="p">[</span><span class="n">daily_data</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">weekday</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">day</span><span class="p">]</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">cnt</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="c1"># 定义绘图函数</span>
+<span class="k">def</span> <span class="nf">boxplot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">base_color</span><span class="p">,</span> <span class="n">median_color</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="p">)</span>
+
+    <span class="c1"># 设置样式</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y_data</span>
+               <span class="c1"># 箱子是否颜色填充</span>
+               <span class="p">,</span> <span class="n">patch_artist</span> <span class="o">=</span> <span class="bp">True</span>
+               <span class="c1"># 中位数线颜色</span>
+               <span class="p">,</span> <span class="n">medianprops</span> <span class="o">=</span> <span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">color</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">base_color</span><span class="p">}</span>
+               <span class="c1"># 箱子颜色设置，color：边框颜色，facecolor：填充颜色</span>
+               <span class="p">,</span> <span class="n">boxprops</span> <span class="o">=</span> <span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">color</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">base_color</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">facecolor</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">median_color</span><span class="p">}</span>
+               <span class="c1"># 猫须颜色whisker</span>
+               <span class="p">,</span> <span class="n">whiskerprops</span> <span class="o">=</span> <span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">color</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">median_color</span><span class="p">}</span>
+               <span class="c1"># 猫须界限颜色whisker cap</span>
+               <span class="p">,</span> <span class="n">capprops</span> <span class="o">=</span> <span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">color</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">base_color</span><span class="p">}</span><span class="p">)</span>
+
+    <span class="c1"># 箱图与x_data保持一致</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+<span class="c1"># 调用绘图函数</span>
+<span class="n">boxplot</span><span class="p">(</span><span class="n">x_data</span> <span class="o">=</span> <span class="n">days</span>
+        <span class="p">,</span> <span class="n">y_data</span> <span class="o">=</span> <span class="n">bp_data</span>
+        <span class="p">,</span> <span class="n">base_color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">b</span><span class="s1">&#39;</span>
+        <span class="p">,</span> <span class="n">median_color</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">r</span><span class="s1">&#39;</span>
+        <span class="p">,</span> <span class="n">x_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Day of week</span><span class="s1">&#39;</span>
+        <span class="p">,</span> <span class="n">y_label</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Check outs</span><span class="s1">&#39;</span>
+        <span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Total Check Outs By Day of Week (0 = Sunday)</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/matboxes.png" alt="" /></p>
+<h2 id="简单总结">简单总结</h2>
+<ul>
+<li>关联分析、数值比较：散点图、曲线图</li>
+<li>分布分析：灰度图、密度图</li>
+<li>涉及分类的分析：柱状图、箱式图</li>
+</ul>
 
     </article>
     
@@ -2421,10 +2917,21 @@ document.addEventListener('DOMContentLoaded', function () {
         <li><a href="#步骤4分布分析">步骤4：分布分析</a>
           <ul>
             <li><a href="#灰度图">灰度图</a></li>
+            <li><a href="#堆叠直方图">堆叠直方图</a></li>
+            <li><a href="#密度图">密度图</a></li>
+          </ul>
+        </li>
+        <li><a href="#步骤5组间分析">步骤5：组间分析</a>
+          <ul>
+            <li><a href="#柱状图">柱状图</a></li>
+            <li><a href="#堆积柱状图">堆积柱状图</a></li>
+            <li><a href="#分组柱状图">分组柱状图</a></li>
+            <li><a href="#箱式图">箱式图</a></li>
           </ul>
         </li>
       </ul>
     </li>
+    <li><a href="#简单总结">简单总结</a></li>
   </ul>
 </nav>
   </div>
