@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 9, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 13 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 9, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 14 min read </span>
   <span class="single__info">
     
   </span>
@@ -2757,6 +2757,240 @@ bandwidth的概念：用于近似的正态分布曲线的宽度。</p>
 </code></pre></td></tr></table>
 </div>
 </div><p><img src="/images/dataanalysis/snspairgrid.png" alt="" /></p>
+<h1 id="seaborn高级分析-连续变量关联分析">seaborn高级分析-连续变量关联分析</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">color_codes</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">ord</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">regression</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">ignore</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">tips</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tips</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">tips</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	total_bill	tip	sex	smoker	day	time	size
+0	16.99	1.01	Female	No	Sun	Dinner	2
+1	10.34	1.66	Male	No	Sun	Dinner	3
+2	21.01	3.50	Male	No	Sun	Dinner	3
+3	23.68	3.31	Male	No	Sun	Dinner	2
+4	24.59	3.61	Female	No	Sun	Dinner	4
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">tips</span><span class="p">[</span><span class="n">tips</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">size</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>	total_bill	tip	sex	smoker	day	time	size
+67	3.07	1.00	Female	Yes	Sat	Dinner	1
+82	10.07	1.83	Female	No	Thur	Lunch	1
+111	7.25	1.00	Female	No	Sat	Dinner	1
+222	8.58	1.92	Male	Yes	Fri	Lunch	1
+</code></pre><h2 id="绘制线性回归模型">绘制线性回归模型</h2>
+<p>最简单的方式：散点图 + 线性回归 + 95%置信区间</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_bill</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snslmp.png" alt="" /><br />
+对于变量离线取值，散点图就显得有些尴尬</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">size</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snslmp2.png" alt="" /><br />
+方法1：加个小的jitter</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">size</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">,</span> <span class="n">x_jitter</span><span class="o">=</span><span class="o">.</span><span class="mi">08</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snslmp3.png" alt="" /><br />
+方法2：离散取值上用均值和置信区间代替散点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">size</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">,</span> <span class="n">x_estimator</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span><span class="n">ci</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snslmp4.png" alt="" /></p>
+<h2 id="拟合不同模型">拟合不同模型</h2>
+<p>有些时候线性拟合效果不错，有些时候差强人意~</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">anscombe</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">anscombe</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">x</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">y</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">anscombe</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">dataset == </span><span class="s2">&#39;</span><span class="s2">I</span><span class="s2">&#39;</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">s</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snslmp5.png" alt="" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">x</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">y</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">anscombe</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">dataset == </span><span class="s2">&#39;</span><span class="s2">II</span><span class="s2">&#39;</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">s</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snslmp6.png" alt="" /><br />
+高阶拟合</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#order=2代表x2</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">x</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">y</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">anscombe</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">dataset == </span><span class="s2">&#39;</span><span class="s2">II</span><span class="s2">&#39;</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">s</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snsorder2.png" alt="" /><br />
+处理异常值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">x</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">y</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">anscombe</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">dataset == </span><span class="s2">&#39;</span><span class="s2">III</span><span class="s2">&#39;</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">,</span> <span class="n">robust</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">s</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snsrobust.png" alt="" /><br />
+二值变量拟合</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">tips</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">big_tip</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">tips</span><span class="o">.</span><span class="n">tip</span> <span class="o">/</span> <span class="n">tips</span><span class="o">.</span><span class="n">total_bill</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">.</span><span class="mi">15</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_bill</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">big_tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">,</span> <span class="n">y_jitter</span><span class="o">=</span><span class="o">.</span><span class="mo">05</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>二值变量用直线模拟不了<br />
+<img src="/images/dataanalysis/sns2value.png" alt="" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_bill</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">big_tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">y_jitter</span><span class="o">=</span><span class="o">.</span><span class="mo">03</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snslogistic.png" alt="" /><br />
+如何评价拟合效果？残差曲线~</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">residplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">x</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">y</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">anscombe</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">dataset == </span><span class="s2">&#39;</span><span class="s2">I</span><span class="s2">&#39;</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">s</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snsresid.png" alt="" /><br />
+拟合的好，就是白噪声的分布 𝑁(0,𝜎2)  拟合的差，就能看出一些模式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">residplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">x</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">y</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">anscombe</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">dataset == </span><span class="s2">&#39;</span><span class="s2">II</span><span class="s2">&#39;</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">s</span><span class="s2">&#34;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snsgood.png" alt="" /></p>
+<h2 id="变量间的条件关系摸索">变量间的条件关系摸索</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_bill</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">day</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snshue.png" alt="" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_bill</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">smoker</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">,</span> <span class="n">markers</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">o</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">x</span><span class="s2">&#34;</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snshue2.png" alt="" /><br />
+增加更多的分类条件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_bill</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">smoker</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">time</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snsmore.png" alt="" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_bill</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">smoker</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">time</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">sex</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snsmore2.png" alt="" /></p>
+<h2 id="控制图片的大小和形状">控制图片的大小和形状</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_bill</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">day</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snsmore3.png" alt="" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">total_bill</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">tip</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">day</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/dataanalysis/snsaspect.png" alt="" /></p>
 
     </article>
     
@@ -3219,6 +3453,13 @@ document.addEventListener('DOMContentLoaded', function () {
       </ul>
     </li>
     <li><a href="#数据集中的两两关系">数据集中的两两关系</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#绘制线性回归模型">绘制线性回归模型</a></li>
+    <li><a href="#拟合不同模型">拟合不同模型</a></li>
+    <li><a href="#变量间的条件关系摸索">变量间的条件关系摸索</a></li>
+    <li><a href="#控制图片的大小和形状">控制图片的大小和形状</a></li>
   </ul>
 </nav>
   </div>
