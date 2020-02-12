@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 9 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 1, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 10 min read </span>
   <span class="single__info">
     
   </span>
@@ -1976,6 +1976,103 @@ z Guangzhou  30000  180000  180000.0
 <span class="n">df1</span><span class="o">.</span><span class="n">join</span>
 </code></pre></td></tr></table>
 </div>
+</div><p>Series和DataFrame还可以被一起concatenate，这时候Series会先被转成DataFrame然后做Join，因为Series本来就是一个只有一维的DataFrame对吧。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shanghai</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">meal</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="p">[</span><span class="n">df1</span><span class="p">,</span> <span class="n">s1</span><span class="p">]</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>Shanghai    60
+Beijing     50
+Name: meal, dtype: int64
+
+           apts    cars
+Shanghai  55000  200000
+Beijing   60000  300000
+
+           apts    cars  meal
+Shanghai  55000  200000    60
+Beijing   60000  300000    50
+</code></pre><p>如何append一个row到DataFrame里。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="p">[</span><span class="mi">18000</span><span class="p">,</span> <span class="mi">12000</span><span class="p">]</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">apts</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">cars</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Xiamen</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#注意这里的name是必须要有的，因为要用作Index。</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>apts    18000
+cars    12000
+Name: Xiamen, dtype: int64
+
+           apts    cars
+Shanghai  55000  200000
+Beijing   60000  300000
+Xiamen    18000   12000
+</code></pre><h3 id="mergejoin">Merge(Join)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">apts</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">55000</span><span class="p">,</span> <span class="mi">60000</span><span class="p">,</span> <span class="mi">58000</span><span class="p">]</span><span class="p">,</span>
+                   <span class="sa"></span><span class="s1">&#39;</span><span class="s1">cars</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">200000</span><span class="p">,</span> <span class="mi">300000</span><span class="p">,</span><span class="mi">250000</span><span class="p">]</span><span class="p">,</span>
+                  <span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shanghai</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shenzhen</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">}</span><span class="p">)</span>
+<span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="p">{</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">salaries</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">30000</span><span class="p">,</span> <span class="mi">30000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">]</span><span class="p">,</span>
+                  <span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Suzhou</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Beijing</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Shanghai</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Guangzhou</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">Tianjin</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">}</span><span class="p">)</span>
+<span class="n">df1</span>
+<span class="n">df4</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df4</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">result</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df4</span><span class="p">)</span>
+<span class="n">result</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df4</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">outer</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">result</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df4</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">right</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">result</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df4</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">left</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">result</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果要用concat做同样的事情</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="p">[</span><span class="n">df1</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">city</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">,</span> <span class="n">df4</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">city</span><span class="s1">&#39;</span><span class="p">)</span><span class="p">]</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">inner</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
 </div><h2 id="lianjia-projects">lianjia projects</h2>
 <h3 id="载入数据">载入数据</h3>
 <div class="highlight"><div class="chroma">
@@ -2645,6 +2742,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <li><a href="#多表合并与拼接">多表合并与拼接</a>
       <ul>
         <li><a href="#concathttpspandaspydataorgpandas-docsstablegeneratedpandasconcathtml">concat</a></li>
+        <li><a href="#mergejoin">Merge(Join)</a></li>
       </ul>
     </li>
     <li><a href="#lianjia-projects">lianjia projects</a>

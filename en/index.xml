@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
-    <lastBuildDate>Sun, 09 Feb 2020 12:12:32 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 10 Feb 2020 19:46:55 +0800</lastBuildDate>
     
         <atom:link href="https://lczen.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     
@@ -29,6 +29,24 @@
         <pubDate>Sun, 19 Jan 2020 21:13:42 +0900</pubDate>
         
         <guid>https://lczen.github.io/en/showcase/hugo/hugo-theme-zdoc/</guid>
+        <description></description>
+      </item>
+      
+      <item>
+        <title>Pandas_view_pratice4</title>
+        <link>https://lczen.github.io/en/posts/pandas_view_pratice4/</link>
+        <pubDate>Mon, 10 Feb 2020 19:46:55 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/pandas_view_pratice4/</guid>
+        <description></description>
+      </item>
+      
+      <item>
+        <title>Spark</title>
+        <link>https://lczen.github.io/en/posts/spark/</link>
+        <pubDate>Mon, 10 Feb 2020 16:49:49 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/spark/</guid>
         <description></description>
       </item>
       

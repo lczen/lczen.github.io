@@ -2,14 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Series on lczen</title>
-    <link>https://lczen.github.io/en/series/</link>
+    <link>https://lczen.github.io/ko/series/</link>
     <description>Recent content in Series on lczen</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ko</language>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 19:46:55 +0800</lastBuildDate>
     
-        <atom:link href="https://lczen.github.io/en/series/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://lczen.github.io/ko/series/index.xml" rel="self" type="application/rss+xml" />
     
     
     
