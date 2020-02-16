@@ -72,11 +72,29 @@
 	"content": ""
 },
 {
+	"uri": "https://lczen.github.io/en/tags/hadoop/",
+	"title": "hadoop",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": ""
+},
+{
 	"uri": "https://lczen.github.io/en/posts/spark/",
 	"title": "Spark",
-	"tags": [""],
+	"tags": ["hadoop"],
 	"categories": [],
-	"series": [""],
+	"series": [],
+	"description": "",
+	"content": "HDFS简介与常见命令 HDFS 全称Hadoop distributed file system，简称HDFS，是一个分布式文件系统。它是谷歌的GFS提出之后出现的另外一种文件系统。它有一定高度的容错性，而且提供了高吞吐量的数据访问，非常适合大规模数据集上的应用。HDFS 提供了一个高度容错性和高吞吐量的海量数据存储解决方案。\n在最初，HADOOP是作为Apache Nutch搜索引擎项目的基础架构而开发的，后来由于它独有的特性，让它成为HADOOP CORE项目的一部分。\nHDFS的设计思路 简单说一下它的设计思路，大家就可以理解为什么它可以提供高吞吐量的数据访问和适合大规模数据集的应用的特性。\n首先HDFS的设计之初就是针对超大文件的存储的，小文件不会提高访问和存储速度，反而会降低；其次它采用了最高效的访问模式，也就是经常所说的流式数据访问，特点就是一次写入多次读取；再有就是它运行在普通的硬件之上的，即使硬件故障，也就通过容错来保证数据的高可用。\nHDFS核心概念  Block：大文件的存储会被分割为多个block进行存储。默认为64MB，每一个blok会在多个datanode上存储多份副本，默认为3份。这些设置都能够通过配置文件进行更改。 Namenode：主要负责存储一些metadata信息，主要包括文件目录、block和文件对应关系，以及block和datanode的对应关系 Datanode：负责存储数据，上面我们所说的高度的容错性大部分在datanode上实现的，还有一部分容错性是体现在namenode和secondname，还有jobtracker的容错等。  HDFS的基础架构图 HDFS优点：  高吞吐量访问：HDFS的每个block分布在不同的rack上，在用户访问时，HDFS会计算使用最近和访问量最小的服务器给用户提供。由于block在不同的rack上都有备份，所以不再是单数据访问，所以速度和效率是非常快的。另外HDFS可以并行从服务器集群中读写，增加了文件读写的访问带宽。 高容错性：上面简单的介绍了一下高度容错。系统故障是不可避免的，如何做到故障之后的数据恢复和容错处理是至关重要的。HDFS通过多方面保证数据的可靠性，多分复制并且分布到物理位置的不同服务器上，数据校验功能、后台的连续自检数据一致性功能，都为高容错提供了可能。 容量扩充：因为HDFS的block信息存放到namenode上，文件的block分布到datanode上，当扩充的时候，仅仅添加datanode数量，系统可以在不停止服务的情况下做扩充，不需要人工干预。\n3个不同的位置： 本地电脑 服务器(Mac:terminal/终端 Windows:Xshell scureCRT) 集群\nHDFS上的数据，分布在不同的地方，我们有一些命令可以用于 增加/查看/删除 等数据操作。  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35  #显示/下的所有文件夹信息 hadoop fs -ls / #递归显示所有文件夹和子文件(夹) hadoop fs -lsr #创建/user/hadoop目录 hadoop fs -mkdir /user/hadoop #把a.txt放到集群/user/hadoop/文件夹下 hadoop fs -put a.txt /user/hadoop/ #把集群上的/user/hadoop/a.txt拉到本地/目录下 hadoop fs -get /user/hadoop/a.txt / #集群上复制文件 hadoop fs -cp src dst #集群上移动文件 hadoop fs -mv src dst #查看集群上文件/user/hadoop/a.txt的内容 hadoop fs -cat /user/hadoop/a.txt #删除集群上/user/hadoop/a.txt文件 hadoop fs -rm /user/hadoop/a.txt #删除目录和目录下所有文件 hadoop fs -rmr /user/hadoop/a.txt #与hadoop fs -put功能类似 hadoop fs -copyFromLocal localsrc dst #将本地文件上传到hdfs，同时删除本地文件 hadoop fs -moveFromLocal localsrc dst   "
+},
+{
+	"uri": "https://lczen.github.io/en/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/",
+	"title": "大数据处理",
+	"tags": [],
+	"categories": [],
+	"series": [],
 	"description": "",
 	"content": ""
 },

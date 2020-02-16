@@ -731,8 +731,8 @@
     "datePublished": "2020-02-10T16:49:49+08:00",
     "dateModified": "2020-02-10T16:49:49+08:00",
     "url" : "https://lczen.github.io/en/posts/spark/",
-    "description": ,
-    "keywords": [""],
+    "description": "HDFS简介与常见命令 HDFS 全称Hadoop distributed file system，简称HDFS，是一个分布式文件系统。它是谷歌的GFS提出之后出现的另外一种文件系统",
+    "keywords": ["hadoop"],
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https://lczen.github.io/"
@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 10, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 0 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 10, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 3 min read </span>
   <span class="single__info">
     
   </span>
@@ -945,33 +945,129 @@
       <div class="single__tags caption">
 
   
+    🏷️
+  
+  
+  <li>
+    <a href="/en/tags/hadoop" class="single__tag" title="hadoop">
+      #hadoop
+    </a>
+  </li>
     
 
 </div>
     </div>    
     <article class="single__contents">
       
-      
+      <h1 id="hdfs简介与常见命令">HDFS简介与常见命令</h1>
+<h2 id="hdfs">HDFS</h2>
+<p>全称Hadoop distributed file system，简称HDFS，是一个分布式文件系统。它是谷歌的GFS提出之后出现的另外一种文件系统。它有一定高度的容错性，而且提供了高吞吐量的数据访问，非常适合大规模数据集上的应用。HDFS 提供了一个高度容错性和高吞吐量的海量数据存储解决方案。</p>
+<p>在最初，HADOOP是作为Apache Nutch搜索引擎项目的基础架构而开发的，后来由于它独有的特性，让它成为HADOOP CORE项目的一部分。</p>
+<p><img src="/images/sparkorhadoop/hdfs-2.jpeg" alt="" /></p>
+<h2 id="hdfs的设计思路">HDFS的设计思路</h2>
+<p>简单说一下它的设计思路，大家就可以理解为什么它可以提供高吞吐量的数据访问和适合大规模数据集的应用的特性。</p>
+<p>首先HDFS的设计之初就是针对超大文件的存储的，小文件不会提高访问和存储速度，反而会降低；其次它采用了最高效的访问模式，也就是经常所说的流式数据访问，特点就是一次写入多次读取；再有就是它运行在普通的硬件之上的，即使硬件故障，也就通过容错来保证数据的高可用。</p>
+<h2 id="hdfs核心概念">HDFS核心概念</h2>
+<ul>
+<li><strong>Block</strong>：大文件的存储会被分割为多个block进行存储。默认为64MB，每一个blok会在多个datanode上存储多份副本，默认为3份。这些设置都能够通过配置文件进行更改。</li>
+<li><strong>Namenode</strong>：主要负责存储一些metadata信息，主要包括文件目录、block和文件对应关系，以及block和datanode的对应关系</li>
+<li><strong>Datanode</strong>：负责存储数据，上面我们所说的高度的容错性大部分在datanode上实现的，还有一部分容错性是体现在namenode和secondname，还有jobtracker的容错等。</li>
+</ul>
+<h2 id="hdfs的基础架构图">HDFS的基础架构图</h2>
+<p><img src="/images/sparkorhadoop/hdfs-structure.jpg" alt="" /></p>
+<h2 id="hdfs优点">HDFS优点：</h2>
+<ul>
+<li><strong>高吞吐量访问</strong>：HDFS的每个block分布在不同的rack上，在用户访问时，HDFS会计算使用最近和访问量最小的服务器给用户提供。由于block在不同的rack上都有备份，所以不再是单数据访问，所以速度和效率是非常快的。另外HDFS可以并行从服务器集群中读写，增加了文件读写的访问带宽。</li>
+<li><strong>高容错性</strong>：上面简单的介绍了一下高度容错。系统故障是不可避免的，如何做到故障之后的数据恢复和容错处理是至关重要的。HDFS通过多方面保证数据的可靠性，多分复制并且分布到物理位置的不同服务器上，数据校验功能、后台的连续自检数据一致性功能，都为高容错提供了可能。</li>
+<li><strong>容量扩充</strong>：因为HDFS的block信息存放到namenode上，文件的block分布到datanode上，当扩充的时候，仅仅添加datanode数量，系统可以在不停止服务的情况下做扩充，不需要人工干预。<br />
+<strong>3个不同的位置：</strong></li>
+<li>本地电脑</li>
+<li>服务器(Mac:terminal/终端 Windows:Xshell scureCRT)</li>
+<li>集群<br />
+HDFS上的数据，分布在不同的地方，我们有一些命令可以用于 增加/查看/删除 等数据操作。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#显示/下的所有文件夹信息</span>
+hadoop fs -ls /
+
+<span class="c1">#递归显示所有文件夹和子文件(夹)</span>
+hadoop fs -lsr
+
+<span class="c1">#创建/user/hadoop目录</span>
+hadoop fs -mkdir /user/hadoop
+
+<span class="c1">#把a.txt放到集群/user/hadoop/文件夹下</span>
+hadoop fs -put a.txt /user/hadoop/
+
+<span class="c1">#把集群上的/user/hadoop/a.txt拉到本地/目录下</span>
+hadoop fs -get /user/hadoop/a.txt /
+
+<span class="c1">#集群上复制文件</span>
+hadoop fs -cp src dst
+
+<span class="c1">#集群上移动文件</span>
+hadoop fs -mv src dst
+
+<span class="c1">#查看集群上文件/user/hadoop/a.txt的内容</span>
+hadoop fs -cat /user/hadoop/a.txt
+
+<span class="c1">#删除集群上/user/hadoop/a.txt文件</span>
+hadoop fs -rm /user/hadoop/a.txt
+
+<span class="c1">#删除目录和目录下所有文件</span>
+hadoop fs -rmr /user/hadoop/a.txt
+
+<span class="c1">#与hadoop fs -put功能类似</span>
+hadoop fs -copyFromLocal localsrc dst 
+
+<span class="c1">#将本地文件上传到hdfs，同时删除本地文件</span>
+hadoop fs -moveFromLocal localsrc dst 
+</code></pre></td></tr></table>
+</div>
+</div>
     </article>
     
     
     <section class="related">
     
-    
-    <h1 class="related__title">
-      <hr class="hr-dots"/>
-      <div>
-        See Also
-      </div>
-      <hr class="hr-dots"/>
-    </h1>
-    <ul class="related-ul">
-        
-        <li>
-          <a href="/en/posts/websites/" class="related__link">资源下载</a>
-        </li>
-        
-    </ul>
     
   </section>
     <div class="grow"></div>
@@ -1342,7 +1438,15 @@ document.addEventListener('DOMContentLoaded', function () {
     
   </div>
   <div class="toc ">
-    <nav id="TableOfContents"></nav>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#hdfs">HDFS</a></li>
+    <li><a href="#hdfs的设计思路">HDFS的设计思路</a></li>
+    <li><a href="#hdfs核心概念">HDFS核心概念</a></li>
+    <li><a href="#hdfs的基础架构图">HDFS的基础架构图</a></li>
+    <li><a href="#hdfs优点">HDFS优点：</a></li>
+  </ul>
+</nav>
   </div>
 </section>
 
