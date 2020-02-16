@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 10, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 9 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 10, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 12 min read </span>
   <span class="single__info">
     
   </span>
@@ -1501,7 +1501,344 @@ Spark创建了4个executor，然后把数据分成4个块。<br />
  <span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Leuven</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">(</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">Jane</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span> <span class="p">[</span><span class="p">]</span><span class="p">)</span><span class="p">)</span><span class="p">]</span>
 </code></pre></td></tr></table>
 </div>
+</div><h1 id="spark-dataframe">Spark DataFrame</h1>
+<h2 id="总览">总览</h2>
+<p>Spark SQL 是 Spark 处理结构化数据的一个模块, 与基础的 Spark RDD API 不同, Spark SQL 提供了查询结构化数据及计算结果等信息的接口.在内部, Spark SQL 使用这个额外的信息去执行额外的优化.有几种方式可以跟 Spark SQL 进行交互, 包括 SQL 和 Dataset API.当使用相同执行引擎进行计算时, 无论使用哪种 API / 语言都可以快速的计算。</p>
+<h2 id="sql">SQL</h2>
+<p>Spark SQL 的功能之一是执行 SQL 查询，Spark SQL 也能够被用于从已存在的 Hive 环境中读取数据。当以另外的编程语言运行SQL 时, 查询结果将以 Dataset/DataFrame的形式返回，也可以使用 命令行或者通过 JDBC/ODBC与 SQL 接口交互.</p>
+<h2 id="dataframes">DataFrames</h2>
+<p>从RDD里可以生成类似大家在pandas中的DataFrame，同时可以方便地在上面完成各种操作。</p>
+<h3 id="构建sparksession">构建SparkSession</h3>
+<p>Spark SQL中所有功能的入口点是 SparkSession 类. 要创建一个 SparkSession, 仅使用 SparkSession.builder()就可以了:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span>	<span class="nn">findspark</span>
+<span class="n">findspark</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Python Spark SQL</span><span class="s2">&#34;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">spark.some.config.option</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">some-value</span><span class="s2">&#34;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
+</div><h3 id="创建-dataframes">创建 DataFrames</h3>
+<p>在一个 SparkSession中, 应用程序可以从一个 已经存在的 RDD 或者 hive表, 或者从Spark数据源中创建一个DataFrames.</p>
+<p>举个例子, 下面就是基于一个JSON文件创建一个DataFrame:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="err">!</span><span class="err">c</span><span class="err">a</span><span class="err">t</span> <span class="err">.</span><span class="err">.</span><span class="err">/</span><span class="err">d</span><span class="err">a</span><span class="err">t</span><span class="err">a</span><span class="err">/</span><span class="err">p</span><span class="err">e</span><span class="err">o</span><span class="err">p</span><span class="err">l</span><span class="err">e</span><span class="err">.</span><span class="err">j</span><span class="err">s</span><span class="err">o</span><span class="err">n</span>
+
+<span class="p">{</span><span class="nt">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;Michael&#34;</span><span class="p">,</span> <span class="nt">&#34;age&#34;</span><span class="p">:</span><span class="mi">33</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;Andy&#34;</span><span class="p">,</span> <span class="nt">&#34;age&#34;</span><span class="p">:</span><span class="mi">30</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;Justin&#34;</span><span class="p">,</span> <span class="nt">&#34;age&#34;</span><span class="p">:</span><span class="mi">19</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">../data/people.json</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">df</span> <span class="c1"># DataFrame[age: bigint, name: string]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+---+-------+
+|age|   name|
++---+-------+
+| 33|Michael|
+| 30|   Andy|
+| 19| Justin|
++---+-------+
+</code></pre><h3 id="dataframe-操作">DataFrame 操作</h3>
+<p>DataFrames 提供了一个特定的语法用在 Scala, Java, Python and R中机构化数据的操作。</p>
+<p>在Python中，可以通过(df.age) 或者(df[&lsquo;age&rsquo;])来获取DataFrame的列. 虽然前者便于交互式操作, 但是还是建议用户使用后者, 这样不会破坏列名，也能引用DataFrame的类。</p>
+<h3 id="注意以下操作的select">注意以下操作的select</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">printSchema</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>root
+ |-- age: long (nullable = true)
+ |-- name: string (nullable = true)
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">name</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+-------+
+|   name|
++-------+
+|Michael|
+|   Andy|
+| Justin|
++-------+
+
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">name</span><span class="s2">&#34;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">age</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+-------+---+
+|   name|age|
++-------+---+
+|Michael| 33|
+|   Andy| 30|
+| Justin| 19|
++-------+---+
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">name</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">age</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+-------+---------+
+|   name|(age + 1)|
++-------+---------+
+|Michael|       34|
+|   Andy|       31|
+| Justin|       20|
++-------+---------+
+
+</code></pre><h3 id="以下操作的filter做数据选择">以下操作的filter做数据选择</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">age</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">21</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+---+-------+
+|age|   name|
++---+-------+
+| 33|Michael|
+| 30|   Andy|
++---+-------+
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">age</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+---+-----+
+|age|count|
++---+-----+
+| 19|    1|
+| 33|    1|
+| 30|    1|
++---+-----+
+</code></pre><h2 id="spark-sql">spark SQL</h2>
+<p>SparkSession 的 sql 函数可以让应用程序以编程的方式运行 SQL 查询, 并将结果作为一个 DataFrame 返回.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">people</span><span class="s2">&#34;</span><span class="p">)</span>
+
+<span class="n">sqlDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">SELECT * FROM people</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">sqlDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+---+-------+
+|age|   name|
++---+-------+
+| 33|Michael|
+| 30|   Andy|
+| 19| Justin|
++---+-------+
+</code></pre><h2 id="spark-dataframe与rdd交互">spark DataFrame与RDD交互</h2>
+<p>Spark SQL 支持两种不同的方法用于转换已存在的 RDD 成为 Dataset</p>
+<p>第一种方法是使用反射去推断一个包含指定的对象类型的 RDD 的 Schema.在你的 Spark 应用程序中当你已知 Schema 时这个基于方法的反射可以让你的代码更简洁.</p>
+<p>第二种用于创建 Dataset 的方法是通过一个允许你构造一个 Schema 然后把它应用到一个已存在的 RDD 的编程接口.然而这种方法更繁琐, 当列和它们的类型知道运行时都是未知时它允许你去构造 Dataset.<br />
+!cat ../data/people.txt</p>
+<h3 id="反射推断">反射推断</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">Row</span>
+
+<span class="n">sc</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">../data/people.txt</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">parts</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">,</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">)</span>
+<span class="n">people</span> <span class="o">=</span> <span class="n">parts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">Row</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+
+<span class="c1"># Infer the schema, and register the DataFrame as a table.</span>
+<span class="n">schemaPeople</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">people</span><span class="p">)</span>
+<span class="n">schemaPeople</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">people</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">teenagers</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">SELECT name FROM people WHERE age &gt;= 13 AND age &lt;= 19</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">type</span><span class="p">(</span><span class="n">teenagers</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>pyspark.sql.dataframe.DataFrame</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">type</span><span class="p">(</span><span class="n">teenagers</span><span class="o">.</span><span class="n">rdd</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>pyspark.rdd.RDD</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">teenagers</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Row(name='Justin&rsquo;)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">teenNames</span> <span class="o">=</span> <span class="n">teenagers</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">Name: </span><span class="s2">&#34;</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">teenNames</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Name: Justin</p>
+<h3 id="以编程的方式指定schema">以编程的方式指定Schema</h3>
+<p>也可以通过以下的方式去初始化一个 DataFrame。</p>
+<ul>
+<li>RDD从原始的RDD穿件一个RDD的toples或者一个列表;</li>
+<li>Step 1 被创建后, 创建 Schema 表示一个 StructType 匹配 RDD 中的结构.</li>
+<li>通过 SparkSession 提供的 createDataFrame 方法应用 Schema 到 RDD .</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sc</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span>
+
+<span class="c1"># Load a text file and convert each line to a Row.</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">../data/people.txt</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">parts</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">,</span><span class="s2">&#34;</span><span class="p">)</span><span class="p">)</span>
+<span class="c1"># Each line is converted to a tuple.</span>
+<span class="n">people</span> <span class="o">=</span> <span class="n">parts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+
+<span class="c1"># The schema is encoded in a string.</span>
+<span class="n">schemaString</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">name age</span><span class="s2">&#34;</span>
+
+<span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">StructField</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(</span><span class="p">)</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">schemaString</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="p">)</span><span class="p">]</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+
+<span class="c1"># Apply the schema to the RDD.</span>
+<span class="n">schemaPeople</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">people</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">schemaPeople</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">people</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">SELECT name FROM people</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+-------+
+|   name|
++-------+
+|Michael|
+|   Andy|
+| Justin|
++-------+
+
+</code></pre>
     </article>
     
     
@@ -1890,6 +2227,27 @@ document.addEventListener('DOMContentLoaded', function () {
     </li>
     <li><a href="#rdd-transformations和actions">RDD transformations和actions</a></li>
     <li><a href="#rdd间的操作">RDD间的操作</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#总览">总览</a></li>
+    <li><a href="#sql">SQL</a></li>
+    <li><a href="#dataframes">DataFrames</a>
+      <ul>
+        <li><a href="#构建sparksession">构建SparkSession</a></li>
+        <li><a href="#创建-dataframes">创建 DataFrames</a></li>
+        <li><a href="#dataframe-操作">DataFrame 操作</a></li>
+        <li><a href="#注意以下操作的select">注意以下操作的select</a></li>
+        <li><a href="#以下操作的filter做数据选择">以下操作的filter做数据选择</a></li>
+      </ul>
+    </li>
+    <li><a href="#spark-sql">spark SQL</a></li>
+    <li><a href="#spark-dataframe与rdd交互">spark DataFrame与RDD交互</a>
+      <ul>
+        <li><a href="#反射推断">反射推断</a></li>
+        <li><a href="#以编程的方式指定schema">以编程的方式指定Schema</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
