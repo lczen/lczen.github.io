@@ -937,7 +937,7 @@
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 10, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 12 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 10, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 13 min read </span>
   <span class="single__info">
     
   </span>
@@ -1838,7 +1838,251 @@ Spark创建了4个executor，然后把数据分成4个块。<br />
 | Justin|
 +-------+
 
-</code></pre>
+</code></pre><h1 id="spark-dataframe-vs-sql">Spark DataFrame vs SQL</h1>
+<h2 id="spark-dataframe-vs-sql-的小练习">Spark DataFrame vs SQL 的小练习</h2>
+<h3 id="a初始化spark-session">a.初始化Spark Session</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span>	<span class="nn">findspark</span>
+<span class="n">findspark</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">Python Spark SQL</span><span class="s2">&#34;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">spark.some.config.option</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">some-value</span><span class="s2">&#34;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="b构建数据集与序列化">b.构建数据集与序列化</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">stringJSONRDD</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;&#34;&#34;</span><span class="s2"> </span><span class="s2">
+</span><span class="s2"></span><span class="s2">  { </span><span class="s2">&#34;</span><span class="s2">id</span><span class="s2">&#34;</span><span class="s2">: </span><span class="s2">&#34;</span><span class="s2">123</span><span class="s2">&#34;</span><span class="s2">,</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">name</span><span class="s2">&#34;</span><span class="s2">: </span><span class="s2">&#34;</span><span class="s2">Katie</span><span class="s2">&#34;</span><span class="s2">,</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">age</span><span class="s2">&#34;</span><span class="s2">: 19,</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">eyeColor</span><span class="s2">&#34;</span><span class="s2">: </span><span class="s2">&#34;</span><span class="s2">brown</span><span class="s2">&#34;</span><span class="s2">
+</span><span class="s2"></span><span class="s2">  }</span><span class="s2">&#34;&#34;&#34;</span><span class="p">,</span>
+   <span class="sa"></span><span class="s2">&#34;&#34;&#34;</span><span class="s2">{</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">id</span><span class="s2">&#34;</span><span class="s2">: </span><span class="s2">&#34;</span><span class="s2">234</span><span class="s2">&#34;</span><span class="s2">,</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">name</span><span class="s2">&#34;</span><span class="s2">: </span><span class="s2">&#34;</span><span class="s2">Michael</span><span class="s2">&#34;</span><span class="s2">,</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">age</span><span class="s2">&#34;</span><span class="s2">: 22,</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">eyeColor</span><span class="s2">&#34;</span><span class="s2">: </span><span class="s2">&#34;</span><span class="s2">green</span><span class="s2">&#34;</span><span class="s2">
+</span><span class="s2"></span><span class="s2">  }</span><span class="s2">&#34;&#34;&#34;</span><span class="p">,</span> 
+  <span class="sa"></span><span class="s2">&#34;&#34;&#34;</span><span class="s2">{</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">id</span><span class="s2">&#34;</span><span class="s2">: </span><span class="s2">&#34;</span><span class="s2">345</span><span class="s2">&#34;</span><span class="s2">,</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">name</span><span class="s2">&#34;</span><span class="s2">: </span><span class="s2">&#34;</span><span class="s2">Simone</span><span class="s2">&#34;</span><span class="s2">,</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">age</span><span class="s2">&#34;</span><span class="s2">: 23,</span><span class="s2">
+</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;</span><span class="s2">eyeColor</span><span class="s2">&#34;</span><span class="s2">: </span><span class="s2">&#34;</span><span class="s2">blue</span><span class="s2">&#34;</span><span class="s2">
+</span><span class="s2"></span><span class="s2">  }</span><span class="s2">&#34;&#34;&#34;</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 构建DataFrame</span>
+<span class="n">swimmersJSON</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">stringJSONRDD</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 创建临时表</span>
+<span class="n">swimmersJSON</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">swimmersJSON</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># DataFrame信息</span>
+<span class="n">swimmersJSON</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+---+--------+---+-------+
+|age|eyeColor| id|   name|
++---+--------+---+-------+
+| 19|   brown|123|  Katie|
+| 22|   green|234|Michael|
+| 23|    blue|345| Simone|
++---+--------+---+-------+
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">select * from swimmersJSON</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>+---+--------+---+-------+
+|age|eyeColor| id|   name|
++---+--------+---+-------+
+| 19|   brown|123|  Katie|
+| 22|   green|234|Michael|
+| 23|    blue|345| Simone|
++---+--------+---+-------+
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 执行SQL请求</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">select * from swimmersJSON</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>[Row(age=19, eyeColor='brown', id='123', name='Katie'),
+ Row(age=22, eyeColor='green', id='234', name='Michael'),
+ Row(age=23, eyeColor='blue', id='345', name='Simone')]
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 输出数据表的格式</span>
+<span class="n">swimmersJSON</span><span class="o">.</span><span class="n">printSchema</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code class="language-root" data-lang="root"> |-- age: long (nullable = true)
+ |-- eyeColor: string (nullable = true)
+ |-- id: string (nullable = true)
+ |-- name: string (nullable = true)
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 执行SQL</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">select count(1) from swimmersJSON</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>DataFrame[count(1): bigint]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">select count(1) from swimmersJSON</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>+&mdash;&mdash;&ndash;+<br />
+|count(1)|<br />
++&mdash;&mdash;&ndash;+<br />
+|       3|<br />
++&mdash;&mdash;&ndash;+</p>
+<h3 id="cdataframe的请求方式-vs-sql的写法">c.DataFrame的请求方式 vs SQL的写法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># DataFrame的写法</span>
+<span class="n">swimmersJSON</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">id</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">age</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">age = 22</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>+&mdash;+&mdash;+<br />
+| id|age|<br />
++&mdash;+&mdash;+<br />
+|234| 22|<br />
++&mdash;+&mdash;+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># SQL的写法</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">select id, age from swimmersJSON where age = 22</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>+&mdash;+&mdash;+<br />
+| id|age|<br />
++&mdash;+&mdash;+<br />
+|234| 22|<br />
++&mdash;+&mdash;+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># DataFrame的写法</span>
+<span class="n">swimmersJSON</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">name</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">eyeColor</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">eyeColor like </span><span class="s2">&#39;</span><span class="s2">b</span><span class="s2">%</span><span class="s2">&#39;</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>+&mdash;&mdash;+&mdash;&mdash;&ndash;+<br />
+|  name|eyeColor|<br />
++&mdash;&mdash;+&mdash;&mdash;&ndash;+<br />
+| Katie|   brown|<br />
+|Simone|    blue|<br />
++&mdash;&mdash;+&mdash;&mdash;&ndash;+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># SQL的写法</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">select name, eyeColor from swimmersJSON where eyeColor like </span><span class="s2">&#39;</span><span class="s2">b</span><span class="s2">%</span><span class="s2">&#39;</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>+&mdash;&mdash;+&mdash;&mdash;&ndash;+<br />
+|  name|eyeColor|<br />
++&mdash;&mdash;+&mdash;&mdash;&ndash;+<br />
+| Katie|   brown|<br />
+|Simone|    blue|<br />
++&mdash;&mdash;+&mdash;&mdash;&ndash;+</p>
+
     </article>
     
     
@@ -2246,6 +2490,16 @@ document.addEventListener('DOMContentLoaded', function () {
       <ul>
         <li><a href="#反射推断">反射推断</a></li>
         <li><a href="#以编程的方式指定schema">以编程的方式指定Schema</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#spark-dataframe-vs-sql-的小练习">Spark DataFrame vs SQL 的小练习</a>
+      <ul>
+        <li><a href="#a初始化spark-session">a.初始化Spark Session</a></li>
+        <li><a href="#b构建数据集与序列化">b.构建数据集与序列化</a></li>
+        <li><a href="#cdataframe的请求方式-vs-sql的写法">c.DataFrame的请求方式 vs SQL的写法</a></li>
       </ul>
     </li>
   </ul>
