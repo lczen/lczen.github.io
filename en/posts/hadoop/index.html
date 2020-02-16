@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pandas_view_pratice4 – lczen</title>
+    <title>hadoop – lczen</title>
     
 
 
@@ -691,19 +691,19 @@
 
     <meta name="description" content="" />
 <meta name="keywords" content="">
-<meta name="created" content="2020-02-10T19:46:55&#43;0800">
-<meta name="modified" content="2020-02-10T19:46:55&#43;0800">
+<meta name="created" content="2020-02-10T16:49:49&#43;0800">
+<meta name="modified" content="2020-02-10T16:49:49&#43;0800">
 
 
 <meta property="og:site_name" content="lczen">
-<meta property="og:title" content="Pandas_view_pratice4">
-<meta property="og:url" content="https://lczen.github.io/en/posts/pandas_view_pratice4/">
+<meta property="og:title" content="hadoop">
+<meta property="og:url" content="https://lczen.github.io/en/posts/hadoop/">
 <meta property="og:type" content="article">
 
 <meta name="generator" content="Hugo 0.62.2" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
-<link rel="canonical" href="https://lczen.github.io/en/posts/pandas_view_pratice4/">
+<link rel="canonical" href="https://lczen.github.io/en/posts/hadoop/">
 <link rel="manifest" href="/manifest.json">
 
   <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
@@ -727,12 +727,12 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "headline": "Pandas_view_pratice4",
-    "datePublished": "2020-02-10T19:46:55+08:00",
-    "dateModified": "2020-02-10T19:46:55+08:00",
-    "url" : "https://lczen.github.io/en/posts/pandas_view_pratice4/",
-    "description": ,
-    "keywords": [""],
+    "headline": "hadoop",
+    "datePublished": "2020-02-10T16:49:49+08:00",
+    "dateModified": "2020-02-10T16:49:49+08:00",
+    "url" : "https://lczen.github.io/en/posts/hadoop/",
+    "description": "HDFS简介与常见命令 HDFS 全称Hadoop distributed file system，简称HDFS，是一个分布式文件系统。它是谷歌的GFS提出之后出现的另外一种文件系统",
+    "keywords": ["hadoop"],
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https://lczen.github.io/"
@@ -924,7 +924,7 @@
   
   <li  class="is-active" >
     
-      <span>Pandas_view_pratice4</span>
+      <span>hadoop</span>
     
   </li>
   
@@ -933,11 +933,11 @@
 </nav>
   
   <div class="single">
-    <h2 class="single__title">Pandas_view_pratice4</h2>
+    <h2 class="single__title">hadoop</h2>
     <div class="single__meta">
       
 <div class="single__infos">
-  <time class="single__info" title="Written At">📅&nbsp;Feb 10, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 0 min read </span>
+  <time class="single__info" title="Written At">📅&nbsp;Feb 10, 2020 </time>  &middot; <span class="single__info" title="Reading Time"> ☕ 8 min read </span>
   <span class="single__info">
     
   </span>
@@ -945,49 +945,435 @@
       <div class="single__tags caption">
 
   
+    🏷️
+  
+  
+  <li>
+    <a href="/en/tags/hadoop" class="single__tag" title="hadoop">
+      #hadoop
+    </a>
+  </li>
     
 
 </div>
     </div>    
     <article class="single__contents">
       
-      
+      <h1 id="hdfs简介与常见命令">HDFS简介与常见命令</h1>
+<h2 id="hdfs">HDFS</h2>
+<p>全称Hadoop distributed file system，简称HDFS，是一个分布式文件系统。它是谷歌的GFS提出之后出现的另外一种文件系统。它有一定高度的容错性，而且提供了高吞吐量的数据访问，非常适合大规模数据集上的应用。HDFS 提供了一个高度容错性和高吞吐量的海量数据存储解决方案。</p>
+<p>在最初，HADOOP是作为Apache Nutch搜索引擎项目的基础架构而开发的，后来由于它独有的特性，让它成为HADOOP CORE项目的一部分。</p>
+<p><img src="/images/sparkorhadoop/hdfs-2.jpeg" alt="" /></p>
+<h2 id="hdfs的设计思路">HDFS的设计思路</h2>
+<p>简单说一下它的设计思路，大家就可以理解为什么它可以提供高吞吐量的数据访问和适合大规模数据集的应用的特性。</p>
+<p>首先HDFS的设计之初就是针对超大文件的存储的，小文件不会提高访问和存储速度，反而会降低；其次它采用了最高效的访问模式，也就是经常所说的流式数据访问，特点就是一次写入多次读取；再有就是它运行在普通的硬件之上的，即使硬件故障，也就通过容错来保证数据的高可用。</p>
+<h2 id="hdfs核心概念">HDFS核心概念</h2>
+<ul>
+<li><strong>Block</strong>：大文件的存储会被分割为多个block进行存储。默认为64MB，每一个blok会在多个datanode上存储多份副本，默认为3份。这些设置都能够通过配置文件进行更改。</li>
+<li><strong>Namenode</strong>：主要负责存储一些metadata信息，主要包括文件目录、block和文件对应关系，以及block和datanode的对应关系</li>
+<li><strong>Datanode</strong>：负责存储数据，上面我们所说的高度的容错性大部分在datanode上实现的，还有一部分容错性是体现在namenode和secondname，还有jobtracker的容错等。</li>
+</ul>
+<h2 id="hdfs的基础架构图">HDFS的基础架构图</h2>
+<p><img src="/images/sparkorhadoop/hdfs-structure.jpg" alt="" /></p>
+<h2 id="hdfs优点">HDFS优点：</h2>
+<ul>
+<li><strong>高吞吐量访问</strong>：HDFS的每个block分布在不同的rack上，在用户访问时，HDFS会计算使用最近和访问量最小的服务器给用户提供。由于block在不同的rack上都有备份，所以不再是单数据访问，所以速度和效率是非常快的。另外HDFS可以并行从服务器集群中读写，增加了文件读写的访问带宽。</li>
+<li><strong>高容错性</strong>：上面简单的介绍了一下高度容错。系统故障是不可避免的，如何做到故障之后的数据恢复和容错处理是至关重要的。HDFS通过多方面保证数据的可靠性，多分复制并且分布到物理位置的不同服务器上，数据校验功能、后台的连续自检数据一致性功能，都为高容错提供了可能。</li>
+<li><strong>容量扩充</strong>：因为HDFS的block信息存放到namenode上，文件的block分布到datanode上，当扩充的时候，仅仅添加datanode数量，系统可以在不停止服务的情况下做扩充，不需要人工干预。<br />
+<strong>3个不同的位置：</strong></li>
+<li>本地电脑</li>
+<li>服务器(Mac:terminal/终端 Windows:Xshell scureCRT)</li>
+<li>集群<br />
+HDFS上的数据，分布在不同的地方，我们有一些命令可以用于 增加/查看/删除 等数据操作。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#显示/下的所有文件夹信息</span>
+hadoop fs -ls /
+
+<span class="c1">#递归显示所有文件夹和子文件(夹)</span>
+hadoop fs -lsr
+
+<span class="c1">#创建/user/hadoop目录</span>
+hadoop fs -mkdir /user/hadoop
+
+<span class="c1">#把a.txt放到集群/user/hadoop/文件夹下</span>
+hadoop fs -put a.txt /user/hadoop/
+
+<span class="c1">#把集群上的/user/hadoop/a.txt拉到本地/目录下</span>
+hadoop fs -get /user/hadoop/a.txt /
+
+<span class="c1">#集群上复制文件</span>
+hadoop fs -cp src dst
+
+<span class="c1">#集群上移动文件</span>
+hadoop fs -mv src dst
+
+<span class="c1">#查看集群上文件/user/hadoop/a.txt的内容</span>
+hadoop fs -cat /user/hadoop/a.txt
+
+<span class="c1">#删除集群上/user/hadoop/a.txt文件</span>
+hadoop fs -rm /user/hadoop/a.txt
+
+<span class="c1">#删除目录和目录下所有文件</span>
+hadoop fs -rmr /user/hadoop/a.txt
+
+<span class="c1">#与hadoop fs -put功能类似</span>
+hadoop fs -copyFromLocal localsrc dst 
+
+<span class="c1">#将本地文件上传到hdfs，同时删除本地文件</span>
+hadoop fs -moveFromLocal localsrc dst 
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="hadoop经典案例--词频统计">Hadoop经典案例&ndash;词频统计</h1>
+<p><img src="/images/sparkorhadoop/mr-flow.png" alt="" /><br />
+我们前面提完了用hadoop完成大数据处理的一些基本知识，这次实验咱们一起来学习一下，如何编写Hadoop的map/reduce任务，完成大数据的处理。</p>
+<p>这是一个非常经典的例子，几乎在任何的hadoop教材上都会看到它，即使如此，它依旧是最经典最有代表性的案例，学习大数据处理，可以从先理解清楚它入手。</p>
+<h2 id="总体流程">总体流程</h2>
+<p>咱们来看看对特别大的文件统计，整个过程是如何分拆的。<br><br />
+大家想想词频统计的过程，如果是单机完成，我们需要做的事情是维护一个计数器字典，对每次出现的词，词频+1.但是当数据量非常大的时候，没办法在内存中维护这么大的一个字典，我们就要换一种思路来完成这个任务了，也就是我们所谓的map-reduce过程。</p>
+<p>大体的过程画成图是下面这个样子：<br />
+<img src="/images/sparkorhadoop/word_count.png" alt="" /><br />
+大概是分成下面几个环节：</p>
+<ul>
+<li><strong>Map阶段</strong>
+<ul>
+<li>主要完成key-value对生成，这里是每看到一个单词，就输出(单词，1)的kv对</li>
+</ul>
+</li>
+<li><strong>排序阶段</strong>
+<ul>
+<li>对刚才的kv对进行排序，这样相同单词就在一块儿了</li>
+</ul>
+</li>
+<li><strong>Reduce阶段</strong>
+<ul>
+<li>对同一个单词的次数进行汇总，得到(词，频次)对</li>
+</ul>
+</li>
+</ul>
+<h2 id="map阶段代码">Map阶段代码</h2>
+<p>流程大家都看清楚啦，咱们来看看用代码如何实现，你猜怎么着，有了hadoop streaming，咱们可以用python脚本完成map和reduce的过程，然后把整个流程跑起来！</p>
+<p>比如咱们map阶段要做的就是把每一个单词和出现1次的信息输出来！所以我们写一个mapper.py文件，具体内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#coding: utf-8</span>
+<span class="c1">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># 从标准输入过来的数据</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">:</span>
+    <span class="c1"># 把首位的空格去掉</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="p">)</span>
+    <span class="c1"># 把这一行文本切分成单词(按照空格)</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2"> </span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="c1"># 对见到的单词进行次数标注(出现1次)</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="k">print</span> <span class="sa"></span><span class="s1">&#39;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对，就这么简单，你看到了，对于输入进来的每一行，我们做完切分之后，都会输出(单词，1)这样一个kv对，表明这个单词出现过。</p>
+<h2 id="排序阶段">排序阶段</h2>
+<p>中间会有一个对上述结果进行排序的过程，以保证所有相同的单词都在一起，不过不用担心，这个过程是系统会自动完成的，因此不用我们编写额外的代码。</p>
+<h2 id="reduce阶段">Reduce阶段</h2>
+<p>接下来就是对map排序后的结果进行汇总了，这个阶段我们可以用一个reducer.py的python脚本来完成，具体完成的任务，就是：</p>
+<p>对于读入的(单词，1)对</p>
+<ul>
+<li>如果这个单词还没有结束（排序后所有相同的单词都在一起了），我们就对单词的次数+1</li>
+<li>如果遇到新单词了，那重新开始对新单词计数</li>
+</ul>
+<p>基于上面的想法，我们可以完成以下的reducer.py脚本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#coding: utf-8</span>
+<span class="c1">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">current_word</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">current_count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">word</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c1"># 依旧是标准输入过来的数据</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">:</span>
+    <span class="c1"># 去除左右空格</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="p">)</span>
+
+    <span class="c1"># 按照tab键对行切分，得到word和次数1</span>
+    <span class="n">word</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 你得到的1是一个字符串，需要对它进行类型转化</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="c1">#如果不能转成数字，输入有问题，调到下一行</span>
+        <span class="k">continue</span>
+
+    <span class="c1"># 如果本次读取的单词和上一次一样，对次数加1</span>
+    <span class="k">if</span> <span class="n">current_word</span> <span class="o">==</span> <span class="n">word</span><span class="p">:</span>
+        <span class="n">current_count</span> <span class="o">+</span><span class="o">=</span> <span class="n">count</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">current_word</span><span class="p">:</span>
+            <span class="c1"># 输出统计结果</span>
+            <span class="k">print</span> <span class="sa"></span><span class="s1">&#39;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">current_word</span><span class="p">,</span> <span class="n">current_count</span><span class="p">)</span>
+        <span class="n">current_count</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="n">current_word</span> <span class="o">=</span> <span class="n">word</span>
+
+<span class="c1"># 不要忘了最后一个词哦，也得输出结果</span>
+<span class="k">if</span> <span class="n">current_word</span> <span class="o">==</span> <span class="n">word</span><span class="p">:</span>
+    <span class="k">print</span> <span class="sa"></span><span class="s1">&#39;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">current_word</span><span class="p">,</span> <span class="n">current_count</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>怎么样，2个脚本是不是很好懂？</p>
+<h2 id="本地模拟测试代码">本地模拟测试代码</h2>
+<p>一般情况下，我们不会一遍遍用hadoop streaming执行任务，去测试脚本写得对不对，这个过程太麻烦了。</p>
+<p>有没有本地可以测试的办法？有！</p>
+<p>我们可以利用linux管道模拟map-reduce的过程！比如我们可以下面这样测试：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># very basic test</span>
+<span class="n">user</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">echo</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">foo foo quux labs foo bar quux</span><span class="s2">&#34;</span> <span class="o">|</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">hduser</span><span class="o">/</span><span class="n">mapper</span><span class="o">.</span><span class="n">py</span>
+<span class="n">foo</span>     <span class="mi">1</span>
+<span class="n">foo</span>     <span class="mi">1</span>
+<span class="n">quux</span>    <span class="mi">1</span>
+<span class="n">labs</span>    <span class="mi">1</span>
+<span class="n">foo</span>     <span class="mi">1</span>
+<span class="n">bar</span>     <span class="mi">1</span>
+<span class="n">quux</span>    <span class="mi">1</span>
+
+<span class="n">user</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">echo</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">foo foo quux labs foo bar quux</span><span class="s2">&#34;</span> <span class="o">|</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">hduser</span><span class="o">/</span><span class="n">mapper</span><span class="o">.</span><span class="n">py</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">k1</span><span class="p">,</span><span class="mi">1</span> <span class="o">|</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">hduser</span><span class="o">/</span><span class="n">reducer</span><span class="o">.</span><span class="n">py</span>
+<span class="n">bar</span>     <span class="mi">1</span>
+<span class="n">foo</span>     <span class="mi">3</span>
+<span class="n">labs</span>    <span class="mi">1</span>
+<span class="n">quux</span>    <span class="mi">2</span>
+
+<span class="c1"># 用一本英文电子书作为输入测试一下！比如可以在http://www.gutenberg.org/etext/20417下载到！</span>
+<span class="n">user</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">cat</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">gutenberg</span><span class="o">/</span><span class="mi">20417</span><span class="o">-</span><span class="mf">8.</span><span class="n">txt</span> <span class="o">|</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">hduser</span><span class="o">/</span><span class="n">mapper</span><span class="o">.</span><span class="n">py</span>
+ <span class="n">The</span>     <span class="mi">1</span>
+ <span class="n">Project</span> <span class="mi">1</span>
+ <span class="n">Gutenberg</span>       <span class="mi">1</span>
+ <span class="n">EBook</span>   <span class="mi">1</span>
+ <span class="n">of</span>      <span class="mi">1</span>
+
+<span class="c1"># 后面的sort和reducer过程是一样的，自己试一下！</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="hadoop集群运行案例">Hadoop集群运行案例</h2>
+<p>如果测试通过了，我们就可以在集群上运行我们的案例了，我们先从下面3个链接拉取3本电子书。<br />
+<a href="http://www.gutenberg.org/etext/20417">The Outline of Science, Vol. 1 (of 4) by J. Arthur Thomson</a><br><br />
+<a href="http://www.gutenberg.org/etext/5000">The Notebooks of Leonardo Da Vinci</a><br><br />
+<a href="http://www.gutenberg.org/etext/4300">Ulysses by James Joyce</a><br></p>
+<p>我们把它们下载到一个本地路径下，比如/tmp/gutenberg</p>
+<pre><code>user@ubuntu:~$ ls -l /tmp/gutenberg/
+total 3604
+-rw-r--r-- 1 hduser hadoop  674566 Feb  3 10:17 pg20417.txt
+-rw-r--r-- 1 hduser hadoop 1573112 Feb  3 10:18 pg4300.txt
+-rw-r--r-- 1 hduser hadoop 1423801 Feb  3 10:18 pg5000.txt
+user@ubuntu:~$
+</code></pre><h3 id="拷贝文件到hdfs上">拷贝文件到HDFS上</h3>
+<p>我们前面给大家准备好的HDFS命令小抄在这里派上用场了！执行下面的命令：</p>
+<pre><code>user@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -copyFromLocal /tmp/gutenberg /user/hduser/gutenberg
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -ls
+Found 1 items
+drwxr-xr-x   - user supergroup          0 2016-05-08 17:40 /user/hduser/gutenberg
+user@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -ls /user/hduser/gutenberg
+Found 3 items
+-rw-r--r--   3 hduser supergroup     674566 2016-05-10 11:38 /user/hduser/gutenberg/pg20417.txt
+-rw-r--r--   3 hduser supergroup    1573112 2016-05-10 11:38 /user/hduser/gutenberg/pg4300.txt
+-rw-r--r--   3 hduser supergroup    1423801 2016-05-10 11:38 /user/hduser/gutenberg/pg5000.txt
+user@ubuntu:/usr/local/hadoop$
+</code></pre><h3 id="执行map-reduce任务">执行map-reduce任务</h3>
+<p>下面我们就可以用hadoop streaming执行map-reduce任务了，命令行执行</p>
+<pre><code>user@ubuntu:/usr/local/hadoop$ bin/hadoop jar contrib/streaming/hadoop-*streaming*.jar \
+-file /home/hduser/mapper.py    -mapper /home/hduser/mapper.py \
+-file /home/hduser/reducer.py   -reducer /home/hduser/reducer.py \
+-input /user/hduser/gutenberg/* -output /user/hduser/gutenberg-output
+</code></pre><p>你甚至可以用-D去指定reducer的个数：</p>
+<pre><code>user@ubuntu:/usr/local/hadoop$ bin/hadoop jar contrib/streaming/hadoop-*streaming*.jar -D mapred.reduce.tasks=16 ...
+</code></pre><p>运行的结果过程输出的信息大概是下面这个样子：</p>
+<pre><code>user@ubuntu:/usr/local/hadoop$ bin/hadoop jar contrib/streaming/hadoop-*streaming*.jar -mapper /home/hduser/mapper.py -reducer /home/hduser/reducer.py -input /user/hduser/gutenberg/* -output /user/hduser/gutenberg-output
+ additionalConfSpec_:null
+ null=@@@userJobConfProps_.get(stream.shipped.hadoopstreaming
+ packageJobJar: [/app/hadoop/tmp/hadoop-unjar54543/]
+ [] /tmp/streamjob54544.jar tmpDir=null
+ [...] INFO mapred.FileInputFormat: Total input paths to process : 7
+ [...] INFO streaming.StreamJob: getLocalDirs(): [/app/hadoop/tmp/mapred/local]
+ [...] INFO streaming.StreamJob: Running job: job_200803031615_0021
+ [...]
+ [...] INFO streaming.StreamJob:  map 0%  reduce 0%
+ [...] INFO streaming.StreamJob:  map 43%  reduce 0%
+ [...] INFO streaming.StreamJob:  map 86%  reduce 0%
+ [...] INFO streaming.StreamJob:  map 100%  reduce 0%
+ [...] INFO streaming.StreamJob:  map 100%  reduce 33%
+ [...] INFO streaming.StreamJob:  map 100%  reduce 70%
+ [...] INFO streaming.StreamJob:  map 100%  reduce 77%
+ [...] INFO streaming.StreamJob:  map 100%  reduce 100%
+ [...] INFO streaming.StreamJob: Job complete: job_200803031615_0021
+ [...] INFO streaming.StreamJob: Output: /user/hduser/gutenberg-output
+user@ubuntu:/usr/local/hadoop$
+</code></pre><h3 id="查看执行结果">查看执行结果</h3>
+<p>上面的信息告诉我们任务执行成功了，结果文件存储在hdfs上的/user/hduser/gutenberg-output目录下，我们来看一眼(是的，HDFS小抄又可以用上了)。</p>
+<pre><code>user@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -ls /user/hduser/gutenberg-output
+Found 1 items
+/user/hduser/gutenberg-output/part-00000     &amp;lt;r 1&amp;gt;   903193  2017-03-21 13:00
+user@ubuntu:/usr/local/hadoop$
+</code></pre><p>还可以直接查看结果的内容：</p>
+<pre><code>user@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -cat /user/hduser/gutenberg-output/part-00000
+&quot;(Lo)cra&quot;       1
+&quot;1490   1
+&quot;1498,&quot; 1
+&quot;35&quot;    1
+&quot;40,&quot;   1
+&quot;A      2
+&quot;AS-IS&quot;.        2
+&quot;A_     1
+&quot;Absoluti       1
+[...]
+user@ubuntu:/usr/local/hadoop$
+</code></pre>
     </article>
     
     
     <section class="related">
     
     
-    <h1 class="related__title">
-      <hr class="hr-dots"/>
-      <div>
-        See Also
-      </div>
-      <hr class="hr-dots"/>
-    </h1>
-    <ul class="related-ul">
-        
-        <li>
-          <a href="/en/posts/websites/" class="related__link">资源下载</a>
-        </li>
-        
-    </ul>
-    
   </section>
     <div class="grow"></div>
 <nav class="pagination-single">
   
-    <a href="https://lczen.github.io/en/posts/hadoop/" class="pagination-single__left">
+    <a href="https://lczen.github.io/en/posts/spark/" class="pagination-single__left">
       <div class="pagination-single__icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
       </div>
-      <div class="pagination-single__left-title">hadoop</div>      
+      <div class="pagination-single__left-title">Spark</div>      
     </a>
   
   <div class="grow"></div>
   
-    <a href="https://lczen.github.io/en/showcase/hugo/hugo-theme-zdoc/" class="pagination-single__right">      
-      <div class="pagination-single__right-title">Hugo zDoc Theme</div>
+    <a href="https://lczen.github.io/en/posts/pandas_view_pratice4/" class="pagination-single__right">      
+      <div class="pagination-single__right-title">Pandas_view_pratice4</div>
       <div class="pagination-single__icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/></svg>
       </div>
@@ -1342,7 +1728,30 @@ document.addEventListener('DOMContentLoaded', function () {
     
   </div>
   <div class="toc ">
-    <nav id="TableOfContents"></nav>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#hdfs">HDFS</a></li>
+    <li><a href="#hdfs的设计思路">HDFS的设计思路</a></li>
+    <li><a href="#hdfs核心概念">HDFS核心概念</a></li>
+    <li><a href="#hdfs的基础架构图">HDFS的基础架构图</a></li>
+    <li><a href="#hdfs优点">HDFS优点：</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#总体流程">总体流程</a></li>
+    <li><a href="#map阶段代码">Map阶段代码</a></li>
+    <li><a href="#排序阶段">排序阶段</a></li>
+    <li><a href="#reduce阶段">Reduce阶段</a></li>
+    <li><a href="#本地模拟测试代码">本地模拟测试代码</a></li>
+    <li><a href="#hadoop集群运行案例">Hadoop集群运行案例</a>
+      <ul>
+        <li><a href="#拷贝文件到hdfs上">拷贝文件到HDFS上</a></li>
+        <li><a href="#执行map-reduce任务">执行map-reduce任务</a></li>
+        <li><a href="#查看执行结果">查看执行结果</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
   </div>
 </section>
 
@@ -1919,7 +2328,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
           
             
-              <a href="https://lczen.github.io/en/posts/pandas_view_pratice4/" data-lang="en" class="dropdown-item is-active">English</a>
+              <a href="https://lczen.github.io/en/posts/hadoop/" data-lang="en" class="dropdown-item is-active">English</a>
             
           
         

@@ -15,11 +15,11 @@
     
       
       <item>
-        <title>Spark</title>
-        <link>https://lczen.github.io/en/posts/spark/</link>
+        <title>hadoop</title>
+        <link>https://lczen.github.io/en/posts/hadoop/</link>
         <pubDate>Mon, 10 Feb 2020 16:49:49 +0800</pubDate>
         
-        <guid>https://lczen.github.io/en/posts/spark/</guid>
+        <guid>https://lczen.github.io/en/posts/hadoop/</guid>
         <description>HDFS简介与常见命令 HDFS 全称Hadoop distributed file system，简称HDFS，是一个分布式文件系统。它是谷歌的GFS提出之后出现的另外一种文件系统</description>
       </item>
       

@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>大数据处理 on lczen</title>
-    <link>https://lczen.github.io/en/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/</link>
-    <description>Recent content in 大数据处理 on lczen</description>
+    <title>spark on lczen</title>
+    <link>https://lczen.github.io/en/tags/spark/</link>
+    <description>Recent content in spark on lczen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Mon, 10 Feb 2020 16:49:49 +0800</lastBuildDate>
     
-        <atom:link href="https://lczen.github.io/en/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://lczen.github.io/en/tags/spark/index.xml" rel="self" type="application/rss+xml" />
     
     
     
-      
-      <item>
-        <title>hadoop</title>
-        <link>https://lczen.github.io/en/posts/hadoop/</link>
-        <pubDate>Mon, 10 Feb 2020 16:49:49 +0800</pubDate>
-        
-        <guid>https://lczen.github.io/en/posts/hadoop/</guid>
-        <description>HDFS简介与常见命令 HDFS 全称Hadoop distributed file system，简称HDFS，是一个分布式文件系统。它是谷歌的GFS提出之后出现的另外一种文件系统</description>
-      </item>
       
       <item>
         <title>Spark</title>

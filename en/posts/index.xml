@@ -24,12 +24,21 @@
       </item>
       
       <item>
+        <title>hadoop</title>
+        <link>https://lczen.github.io/en/posts/hadoop/</link>
+        <pubDate>Mon, 10 Feb 2020 16:49:49 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/hadoop/</guid>
+        <description>HDFS简介与常见命令 HDFS 全称Hadoop distributed file system，简称HDFS，是一个分布式文件系统。它是谷歌的GFS提出之后出现的另外一种文件系统</description>
+      </item>
+      
+      <item>
         <title>Spark</title>
         <link>https://lczen.github.io/en/posts/spark/</link>
         <pubDate>Mon, 10 Feb 2020 16:49:49 +0800</pubDate>
         
         <guid>https://lczen.github.io/en/posts/spark/</guid>
-        <description>HDFS简介与常见命令 HDFS 全称Hadoop distributed file system，简称HDFS，是一个分布式文件系统。它是谷歌的GFS提出之后出现的另外一种文件系统</description>
+        <description>Spark 核心概念与操作 spark简介 Apache Spark是新兴的一种快速通用的大规模数据处理引擎。它的优势有三个方面： 通用计算引擎 能够运行MapReduc</description>
       </item>
       
       <item>

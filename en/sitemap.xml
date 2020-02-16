@@ -98,7 +98,17 @@
   </url>
   
   <url>
+    <loc>https://lczen.github.io/en/posts/hadoop/</loc>
+    <lastmod>2020-02-10T16:49:49+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://lczen.github.io/en/posts/spark/</loc>
+    <lastmod>2020-02-10T16:49:49+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lczen.github.io/en/tags/spark/</loc>
     <lastmod>2020-02-10T16:49:49+08:00</lastmod>
   </url>
   
