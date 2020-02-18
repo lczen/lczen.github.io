@@ -20,7 +20,7 @@
         <pubDate>Sun, 09 Feb 2020 12:12:32 +0800</pubDate>
         
         <guid>https://lczen.github.io/en/posts/plotfigure/</guid>
-        <description>基于pandas的内置可视化 基本绘图 Series和DataFrame上的这个功能只是使用matplotlib库的plot()方法的简单包装实</description>
+        <description>seaborn 基于pandas的内置可视化 基本绘图 Series和DataFrame上的这个功能只是使用matplotlib库的plot()方法的简单包装</description>
       </item>
       
       <item>
