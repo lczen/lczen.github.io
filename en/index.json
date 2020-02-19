@@ -36,15 +36,6 @@
 	"content": ""
 },
 {
-	"uri": "https://lczen.github.io/en/posts/pandas_view_pratice4/",
-	"title": "Pandas_view_pratice4",
-	"tags": [""],
-	"categories": [],
-	"series": [""],
-	"description": "",
-	"content": ""
-},
-{
 	"uri": "https://lczen.github.io/en/posts/",
 	"title": "Posts",
 	"tags": ["index"],
@@ -54,8 +45,8 @@
 	"content": ""
 },
 {
-	"uri": "https://lczen.github.io/en/series/",
-	"title": "Series",
+	"uri": "https://lczen.github.io/en/tags/",
+	"title": "Tags",
 	"tags": [],
 	"categories": [],
 	"series": [],
@@ -63,8 +54,44 @@
 	"content": ""
 },
 {
-	"uri": "https://lczen.github.io/en/tags/",
-	"title": "Tags",
+	"uri": "https://lczen.github.io/en/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/",
+	"title": "机器学习",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://lczen.github.io/en/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/",
+	"title": "机器学习",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://lczen.github.io/en/posts/ml/",
+	"title": "机器学习",
+	"tags": ["机器学习"],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": "对数损失/二元交叉熵损失 熵 "
+},
+{
+	"uri": "https://lczen.github.io/en/posts/pandas_view_pratice4/",
+	"title": "Pandas_view_pratice4",
+	"tags": [""],
+	"categories": [],
+	"series": [""],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://lczen.github.io/en/series/",
+	"title": "Series",
 	"tags": [],
 	"categories": [],
 	"series": [],
