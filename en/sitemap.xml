@@ -48,6 +48,11 @@
   </url>
   
   <url>
+    <loc>https://lczen.github.io/en/posts/pandasview/</loc>
+    <lastmod>2020-02-23T12:58:08+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://lczen.github.io/en/posts/</loc>
     <lastmod>2020-02-23T12:58:08+08:00</lastmod>
     <xhtml:link
@@ -75,11 +80,6 @@
                 hreflang="en"
                 href="https://lczen.github.io/en/tags/"
                 />
-  </url>
-  
-  <url>
-    <loc>https://lczen.github.io/en/posts/pandasview/</loc>
-    <lastmod>2020-02-23T12:58:08+08:00</lastmod>
   </url>
   
   <url>
@@ -138,12 +138,12 @@
   </url>
   
   <url>
-    <loc>https://lczen.github.io/en/tags/matplotlib/</loc>
+    <loc>https://lczen.github.io/en/posts/plotfigure/</loc>
     <lastmod>2020-02-09T12:12:32+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://lczen.github.io/en/posts/plotfigure/</loc>
+    <loc>https://lczen.github.io/en/tags/matplotlib/</loc>
     <lastmod>2020-02-09T12:12:32+08:00</lastmod>
   </url>
   

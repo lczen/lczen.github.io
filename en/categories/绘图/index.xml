@@ -15,7 +15,7 @@
     
       
       <item>
-        <title>基于pandas的内置可视化</title>
+        <title>pandas可视化</title>
         <link>https://lczen.github.io/en/posts/pandasview/</link>
         <pubDate>Sun, 23 Feb 2020 12:58:08 +0800</pubDate>
         
@@ -33,7 +33,7 @@
       </item>
       
       <item>
-        <title>绘图</title>
+        <title>Matplotlib</title>
         <link>https://lczen.github.io/en/posts/plotfigure/</link>
         <pubDate>Sun, 09 Feb 2020 12:12:32 +0800</pubDate>
         
