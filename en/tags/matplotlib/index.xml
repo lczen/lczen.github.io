@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>matplotlib on lczen</title>
+    <link>https://lczen.github.io/en/tags/matplotlib/</link>
+    <description>Recent content in matplotlib on lczen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Sun, 09 Feb 2020 12:12:32 +0800</lastBuildDate>
+    
+        <atom:link href="https://lczen.github.io/en/tags/matplotlib/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>绘图</title>
+        <link>https://lczen.github.io/en/posts/plotfigure/</link>
+        <pubDate>Sun, 09 Feb 2020 12:12:32 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/plotfigure/</guid>
+        <description>Matplotlib可视化手册 1.matplotlib 安装配置 sudo pip install numpy sudo pip install scipy sudo pip install matplotlib 2.一幅可视化图的基本结构 通常，使用 numpy 组织数据, 使用 matplotlib API 进行数据图像绘制。 一</description>
+      </item>
+      
+    
+  </channel>
+</rss>

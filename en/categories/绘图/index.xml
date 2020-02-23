@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>绘图 on lczen</title>
+    <link>https://lczen.github.io/en/categories/%E7%BB%98%E5%9B%BE/</link>
+    <description>Recent content in 绘图 on lczen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Sun, 23 Feb 2020 12:58:08 +0800</lastBuildDate>
+    
+        <atom:link href="https://lczen.github.io/en/categories/%E7%BB%98%E5%9B%BE/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>基于pandas的内置可视化</title>
+        <link>https://lczen.github.io/en/posts/pandasview/</link>
+        <pubDate>Sun, 23 Feb 2020 12:58:08 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/pandasview/</guid>
+        <description>基于pandas的内置可视化 基本绘图 Series和DataFrame上的这个功能只是使用matplotlib库的plot()方法的简单包装实</description>
+      </item>
+      
+      <item>
+        <title>Seaborn</title>
+        <link>https://lczen.github.io/en/posts/seaborn/</link>
+        <pubDate>Sun, 23 Feb 2020 12:49:36 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/seaborn/</guid>
+        <description>seaborn seaborn单维度与关联维度分析 单变量分布 1 2 3 4 5 6 7 8 %matplotlib inline import numpy as np import pandas as pd from scipy import stats, integrate import matplotlib.pyplot as plt import seaborn as sns sns.set(color_codes=True) np.random.seed(sum(map(ord, &amp;#34;distributions&amp;#34;))) 1 2 3 4 5 6 7 8 9 10 11 12 13</description>
+      </item>
+      
+      <item>
+        <title>绘图</title>
+        <link>https://lczen.github.io/en/posts/plotfigure/</link>
+        <pubDate>Sun, 09 Feb 2020 12:12:32 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/plotfigure/</guid>
+        <description>Matplotlib可视化手册 1.matplotlib 安装配置 sudo pip install numpy sudo pip install scipy sudo pip install matplotlib 2.一幅可视化图的基本结构 通常，使用 numpy 组织数据, 使用 matplotlib API 进行数据图像绘制。 一</description>
+      </item>
+      
+    
+  </channel>
+</rss>

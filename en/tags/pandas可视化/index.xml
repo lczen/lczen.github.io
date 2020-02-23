@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pandas可视化 on lczen</title>
+    <link>https://lczen.github.io/en/tags/pandas%E5%8F%AF%E8%A7%86%E5%8C%96/</link>
+    <description>Recent content in pandas可视化 on lczen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Sun, 23 Feb 2020 12:58:08 +0800</lastBuildDate>
+    
+        <atom:link href="https://lczen.github.io/en/tags/pandas%E5%8F%AF%E8%A7%86%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>基于pandas的内置可视化</title>
+        <link>https://lczen.github.io/en/posts/pandasview/</link>
+        <pubDate>Sun, 23 Feb 2020 12:58:08 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/pandasview/</guid>
+        <description>基于pandas的内置可视化 基本绘图 Series和DataFrame上的这个功能只是使用matplotlib库的plot()方法的简单包装实</description>
+      </item>
+      
+    
+  </channel>
+</rss>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>seaborn on lczen</title>
+    <link>https://lczen.github.io/en/tags/seaborn/</link>
+    <description>Recent content in seaborn on lczen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Sun, 23 Feb 2020 12:49:36 +0800</lastBuildDate>
+    
+        <atom:link href="https://lczen.github.io/en/tags/seaborn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>Seaborn</title>
+        <link>https://lczen.github.io/en/posts/seaborn/</link>
+        <pubDate>Sun, 23 Feb 2020 12:49:36 +0800</pubDate>
+        
+        <guid>https://lczen.github.io/en/posts/seaborn/</guid>
+        <description>seaborn seaborn单维度与关联维度分析 单变量分布 1 2 3 4 5 6 7 8 %matplotlib inline import numpy as np import pandas as pd from scipy import stats, integrate import matplotlib.pyplot as plt import seaborn as sns sns.set(color_codes=True) np.random.seed(sum(map(ord, &amp;#34;distributions&amp;#34;))) 1 2 3 4 5 6 7 8 9 10 11 12 13</description>
+      </item>
+      
+    
+  </channel>
+</rss>
